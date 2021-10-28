@@ -12,6 +12,7 @@ variable "Queues_Range" {
             permission = string
         })
     }))
+    default = {}
 }
 variable "Subscriptions_Range" {
     type = map(object({
@@ -21,4 +22,5 @@ variable "Subscriptions_Range" {
         topicPrefix = string
         msgVpnName = string
     }))
+    default = {}
 }
