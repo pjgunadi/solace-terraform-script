@@ -1,0 +1,212 @@
+
+solace_host = {
+  uri = "http://127.0.0.1:8080/SEMP/v2/config/"
+  insecure = true
+  username = "admin"
+  password = "yourpassword"
+  write_returns_object = true
+  debug = true
+}
+
+MsgVpns = {
+    myvpn1 = {
+        msgVpnName ="myvpn1"
+        enabled = true
+        authenticationBasicProfileName = ""
+        authenticationBasicType = "internal"
+        authenticationClientCertEnabled = false
+        authorizationProfileName = ""
+        authorizationType = "internal"
+        dmrEnabled = false
+        eventLogTag = ""
+        maxConnectionCount = 100
+        maxMsgSpoolUsage = 100
+        serviceSmfPlainTextEnabled = true
+        serviceSmfTlsEnabled = false
+        tlsAllowDowngradeToPlainTextEnabled = false
+    }
+}
+
+AclProfiles = {
+  test_acl = {
+    aclProfileName = "test_acl"
+    clientConnectDefaultAction = "allow"
+    msgVpnName = "myvpn1"
+    publishTopicDefaultAction = "allow"
+    subscribeShareNameDefaultAction = "disallow"
+    subscribeTopicDefaultAction = "allow"
+  }
+}
+
+ClientConnectExceptions = {
+  exception1 = {
+    aclProfileName = "test_acl"
+    clientConnectExceptionAddress = "192.168.10.0/24"
+    msgVpnName = "myvpn1"
+  }
+}
+
+PublishTopicExceptions = {
+  exception1 = {
+    aclProfileName = "test_acl"
+    msgVpnName = "myvpn1"
+    publishTopicException = "topic/1"
+    publishTopicExceptionSyntax = "smf"
+  },
+  exception2 = {
+    aclProfileName = "test_acl"
+    msgVpnName = "myvpn1"
+    publishTopicException = "topic/2"
+    publishTopicExceptionSyntax = "mqtt"
+  }
+}
+
+SubscribeTopicExceptions = {
+  exception1 = {
+    aclProfileName = "test_acl"
+    msgVpnName = "myvpn1"
+    subscribeTopicException = "topic/3"
+    subscribeTopicExceptionSyntax = "smf"
+  },
+  exception2 = {
+    aclProfileName = "test_acl"
+    msgVpnName = "myvpn1"
+    subscribeTopicException = "topic/4"
+    subscribeTopicExceptionSyntax = "mqtt"
+  }
+}
+
+SubscribeShareNameExceptions = {
+  exception1 = {
+    aclProfileName = "test_acl"
+    msgVpnName = "myvpn1"
+    subscribeShareNameException = "topic5"
+    subscribeShareNameExceptionSyntax = "smf"
+  },
+  exception2 = {
+    aclProfileName = "test_acl"
+    msgVpnName = "myvpn1"
+    subscribeShareNameException = "topic6"
+    subscribeShareNameExceptionSyntax = "mqtt"
+  }
+}
+
+ClientProfiles = {
+  test_cp = {
+    allowBridgeConnectionsEnabled = false
+    allowGuaranteedEndpointCreateDurability = "non-durable"
+    allowGuaranteedEndpointCreateEnabled = false
+    allowGuaranteedMsgReceiveEnabled = true
+    allowGuaranteedMsgSendEnabled = true
+    allowSharedSubscriptionsEnabled = false
+    allowTransactedSessionsEnabled = false
+    clientProfileName = "test_cp"
+    msgVpnName = "myvpn1"
+  }
+}
+
+ClientUsernames = {
+  "testusertf" = {
+    aclProfileName = "test_acl"
+    clientProfileName = "test_cp"
+    clientUsername = "testusertf"
+    enabled = true
+    guaranteedEndpointPermissionOverrideEnabled = false
+    msgVpnName = "myvpn1"
+    password = ""
+    subscriptionManagerEnabled = false
+  }
+}
+
+AuthorizationGroups = {
+  "ldap_authgrp" = {
+    aclProfileName = "test_acl"
+    authorizationGroupName = "ldap_authgrp"
+    clientProfileName = "test_cp"
+    enabled = false
+    msgVpnName = "myvpn1"
+  }
+}
+
+Queues = {
+  "test.tf.q.1" = {
+    accessType = "exclusive"
+    egressEnabled = true
+    ingressEnabled = true
+    msgVpnName = "myvpn1"
+    owner = "testusertf"
+    permission = "no-access"
+    queueName = "test.tf.q.1"
+  }
+}
+
+Subscriptions = {
+  "subscription1" = {
+    msgVpnName = "myvpn1"
+    queueName = "test.tf.q.1"
+    subscriptionTopic = "#LOG/server*/>"
+  }
+}
+
+Bridges = {
+  "test_bridge" = {
+    bridgeName = "test_bridge"
+    bridgeVirtualRouter = "auto"
+    enabled = true
+    msgVpnName = "myvpn1"
+    remoteAuthenticationBasicClientUsername = ""
+    remoteAuthenticationBasicPassword = ""
+    remoteAuthenticationScheme = "client-certificate"
+  }
+}
+
+RemoteMsgVpns = {
+  "remote_vpn1" = {
+    bridgeName = "test_bridge"
+    bridgeVirtualRouter = "auto"
+    compressedDataEnabled = false
+    enabled = true
+    msgVpnName = "myvpn1"
+    queueBinding = "remote_queue"
+    remoteMsgVpnInterface = ""
+    remoteMsgVpnLocation = "127.0.0.1:55443"
+    remoteMsgVpnName = "paulus_vpn"
+    tlsEnabled = true
+  }
+}
+
+RemoteSubscriptions = {
+  "subscribe_topic1" = {
+    bridgeName = "test_bridge"
+    bridgeVirtualRouter = "auto"
+    deliverAlwaysEnabled = true
+    msgVpnName = "myvpn1"
+    remoteSubscriptionTopic = "topic/a*/>"
+  }
+}
+
+Queues_Range = {
+  q1 = {
+    start = 1
+    limit = 11
+    queueNamePrefix = "test.tf.q.range"
+    properties = {
+      msgVpnName = "paulus_vpn"
+      accessType = "exclusive"
+      egressEnabled = true
+      ingressEnabled = true
+      owner = "testusertf"
+      permission = "no-access"
+    }
+  }
+}
+
+Subscriptions_Range = {
+  sr1 = {
+    start = 1
+    limit = 11
+    queueNamePrefix = "test.tf.q.range"
+    topicPrefix = "topic/tf/range"
+    msgVpnName = "paulus_vpn"
+  }
+}
