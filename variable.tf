@@ -289,16 +289,6 @@ variable "JndiTopics" {
     default = {}
 }
 
-variable "MqttRetainCaches" {
-    type = map(object({
-        msgVpnName = string
-        cacheName = string
-        enabled = bool
-        msgLifetime = number
-    }))
-    default = {}
-}
-
 variable "MqttSessions" {
     type = map(object({
         msgVpnName = string

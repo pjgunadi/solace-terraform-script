@@ -64,3 +64,14 @@ resource "restapi_object" "globalCachingHomeClusterTopicPrefixes" {
     restapi_object.globalCachingHomeClusters,
   ]
 }
+
+resource "restapi_object" "mqttRetainCaches" {
+  for_each = var.MqttRetainCaches
+  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttRetainCaches"
+  id_attribute = "cacheName"
+  object_id = urlencode(each.value.cacheName)
+  data = jsonencode(each.value)
+  depends_on = [
+    restapi_object.msgVpns,
+  ]
+}

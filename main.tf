@@ -146,6 +146,7 @@ resource "restapi_object" "bridges" {
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges"
   id_attribute = "bridgeName"
   object_id = urlencode(each.value.bridgeName)
+  force_new = ["bridgeVirtualRouter"]
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/{id},${urlencode(each.value.bridgeVirtualRouter)}"
   update_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/{id},${urlencode(each.value.bridgeVirtualRouter)}"
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/{id},${urlencode(each.value.bridgeVirtualRouter)}"
@@ -160,6 +161,7 @@ resource "restapi_object" "remoteMsgVpns" {
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns"
   id_attribute = "remoteMsgVpnName"
   object_id = urlencode(each.value.remoteMsgVpnName)
+  force_new = ["remoteMsgVpnLocation","remoteMsgVpnInterface"]
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns/{id},${urlencode(each.value.remoteMsgVpnLocation)},${urlencode(each.value.remoteMsgVpnInterface)}"
   update_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns/{id},${urlencode(each.value.remoteMsgVpnLocation)},${urlencode(each.value.remoteMsgVpnInterface)}"
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns/{id},${urlencode(each.value.remoteMsgVpnLocation)},${urlencode(each.value.remoteMsgVpnInterface)}"
@@ -292,23 +294,12 @@ resource "restapi_object" "jndiTopics" {
   ]
 }
 
-
-resource "restapi_object" "mqttRetainCaches" {
-  for_each = var.MqttRetainCaches
-  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttRetainCaches"
-  id_attribute = "cacheName"
-  object_id = urlencode(each.value.cacheName)
-  data = jsonencode(each.value)
-  depends_on = [
-    restapi_object.msgVpns,
-  ]
-}
-
 resource "restapi_object" "mqttSessions" {
   for_each = var.MqttSessions
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions"
   id_attribute = "mqttSessionClientId"
   object_id = urlencode(each.value.mqttSessionClientId)
+  force_new = ["mqttSessionVirtualRouter"]
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}"
   update_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}"
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}"

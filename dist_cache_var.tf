@@ -69,3 +69,13 @@ variable "GlobalCachingHomeClusterTopicPrefixes" {
     }))
     default = {}
 }
+
+variable "MqttRetainCaches" {
+    type = map(object({
+        msgVpnName = string
+        cacheName = string
+        enabled = bool
+        msgLifetime = number
+    }))
+    default = {}
+}
