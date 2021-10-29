@@ -1,5 +1,5 @@
 variable "Queues_Range" {
-    type = map(object({
+    type = list(object({
         start = number
         limit = number
         queueNamePrefix = string
@@ -12,15 +12,15 @@ variable "Queues_Range" {
             permission = string
         })
     }))
-    default = {}
+    default = []
 }
 variable "Subscriptions_Range" {
-    type = map(object({
+    type = list(object({
         start = number
         limit = number
         queueNamePrefix = string
         topicPrefix = string
         msgVpnName = string
     }))
-    default = {}
+    default = []
 }

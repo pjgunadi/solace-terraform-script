@@ -8,27 +8,27 @@ solace_host = {
   debug = true
 }
 
-MsgVpns = {
-    myvpn1 = {
-        msgVpnName ="myvpn1"
-        enabled = true
-        authenticationBasicProfileName = ""
-        authenticationBasicType = "internal"
-        authenticationClientCertEnabled = false
-        authorizationProfileName = ""
-        authorizationType = "internal"
-        dmrEnabled = false
-        eventLogTag = ""
-        maxConnectionCount = 100
-        maxMsgSpoolUsage = 100
-        serviceSmfPlainTextEnabled = true
-        serviceSmfTlsEnabled = false
-        tlsAllowDowngradeToPlainTextEnabled = false
-    }
-}
+MsgVpns = [
+  {
+    msgVpnName ="myvpn1"
+    enabled = true
+    authenticationBasicProfileName = ""
+    authenticationBasicType = "internal"
+    authenticationClientCertEnabled = false
+    authorizationProfileName = ""
+    authorizationType = "internal"
+    dmrEnabled = false
+    eventLogTag = ""
+    maxConnectionCount = 100
+    maxMsgSpoolUsage = 100
+    serviceSmfPlainTextEnabled = true
+    serviceSmfTlsEnabled = false
+    tlsAllowDowngradeToPlainTextEnabled = false
+  }
+]
 
-AclProfiles = {
-  test_acl = {
+AclProfiles = [
+  {
     aclProfileName = "test_acl"
     clientConnectDefaultAction = "allow"
     msgVpnName = "myvpn1"
@@ -36,63 +36,63 @@ AclProfiles = {
     subscribeShareNameDefaultAction = "disallow"
     subscribeTopicDefaultAction = "allow"
   }
-}
+]
 
-ClientConnectExceptions = {
-  exception1 = {
+ClientConnectExceptions = [
+  {
     aclProfileName = "test_acl"
     clientConnectExceptionAddress = "192.168.10.0/24"
     msgVpnName = "myvpn1"
   }
-}
+]
 
-PublishTopicExceptions = {
-  exception1 = {
+PublishTopicExceptions = [
+  {
     aclProfileName = "test_acl"
     msgVpnName = "myvpn1"
     publishTopicException = "topic/1"
     publishTopicExceptionSyntax = "smf"
   },
-  exception2 = {
+  {
     aclProfileName = "test_acl"
     msgVpnName = "myvpn1"
     publishTopicException = "topic/2"
     publishTopicExceptionSyntax = "mqtt"
   }
-}
+]
 
-SubscribeTopicExceptions = {
-  exception1 = {
+SubscribeTopicExceptions = [
+  {
     aclProfileName = "test_acl"
     msgVpnName = "myvpn1"
     subscribeTopicException = "topic/3"
     subscribeTopicExceptionSyntax = "smf"
   },
-  exception2 = {
+  {
     aclProfileName = "test_acl"
     msgVpnName = "myvpn1"
     subscribeTopicException = "topic/4"
     subscribeTopicExceptionSyntax = "mqtt"
   }
-}
+]
 
-SubscribeShareNameExceptions = {
-  exception1 = {
+SubscribeShareNameExceptions = [
+  {
     aclProfileName = "test_acl"
     msgVpnName = "myvpn1"
     subscribeShareNameException = "topic5"
     subscribeShareNameExceptionSyntax = "smf"
   },
-  exception2 = {
+  {
     aclProfileName = "test_acl"
     msgVpnName = "myvpn1"
     subscribeShareNameException = "topic6"
     subscribeShareNameExceptionSyntax = "mqtt"
   }
-}
+]
 
-ClientProfiles = {
-  test_cp = {
+ClientProfiles = [
+  {
     allowBridgeConnectionsEnabled = false
     allowGuaranteedEndpointCreateDurability = "non-durable"
     allowGuaranteedEndpointCreateEnabled = false
@@ -103,10 +103,10 @@ ClientProfiles = {
     clientProfileName = "test_cp"
     msgVpnName = "myvpn1"
   }
-}
+]
 
-ClientUsernames = {
-  "testusertf" = {
+ClientUsernames = [
+  {
     aclProfileName = "test_acl"
     clientProfileName = "test_cp"
     clientUsername = "testusertf"
@@ -116,20 +116,20 @@ ClientUsernames = {
     password = ""
     subscriptionManagerEnabled = false
   }
-}
+]
 
-AuthorizationGroups = {
-  "ldap_authgrp" = {
+AuthorizationGroups = [
+  {
     aclProfileName = "test_acl"
     authorizationGroupName = "ldap_authgrp"
     clientProfileName = "test_cp"
     enabled = false
     msgVpnName = "myvpn1"
   }
-}
+]
 
-Queues = {
-  "test.tf.q.1" = {
+Queues = [
+  {
     accessType = "exclusive"
     egressEnabled = true
     ingressEnabled = true
@@ -138,18 +138,18 @@ Queues = {
     permission = "no-access"
     queueName = "test.tf.q.1"
   }
-}
+]
 
-Subscriptions = {
-  "subscription1" = {
+Subscriptions = [
+  {
     msgVpnName = "myvpn1"
     queueName = "test.tf.q.1"
     subscriptionTopic = "#LOG/server*/>"
   }
-}
+]
 
-Bridges = {
-  "test_bridge" = {
+Bridges = [
+  {
     bridgeName = "test_bridge"
     bridgeVirtualRouter = "auto"
     enabled = true
@@ -158,10 +158,10 @@ Bridges = {
     remoteAuthenticationBasicPassword = ""
     remoteAuthenticationScheme = "client-certificate"
   }
-}
+]
 
-RemoteMsgVpns = {
-  "remote_vpn1" = {
+RemoteMsgVpns = [
+  {
     bridgeName = "test_bridge"
     bridgeVirtualRouter = "auto"
     compressedDataEnabled = false
@@ -173,20 +173,20 @@ RemoteMsgVpns = {
     remoteMsgVpnName = "paulus_vpn"
     tlsEnabled = true
   }
-}
+]
 
-RemoteSubscriptions = {
-  "subscribe_topic1" = {
+RemoteSubscriptions = [
+  {
     bridgeName = "test_bridge"
     bridgeVirtualRouter = "auto"
     deliverAlwaysEnabled = true
     msgVpnName = "myvpn1"
     remoteSubscriptionTopic = "topic/a*/>"
   }
-}
+]
 
-Queues_Range = {
-  q1 = {
+Queues_Range = [
+  {
     start = 1
     limit = 11
     queueNamePrefix = "test.tf.q.range"
@@ -199,14 +199,14 @@ Queues_Range = {
       permission = "no-access"
     }
   }
-}
+]
 
-Subscriptions_Range = {
-  sr1 = {
+Subscriptions_Range = [
+  {
     start = 1
     limit = 11
     queueNamePrefix = "test.tf.q.range"
     topicPrefix = "topic/tf/range"
     msgVpnName = "paulus_vpn"
   }
-}
+]

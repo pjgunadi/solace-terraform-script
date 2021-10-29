@@ -9,7 +9,7 @@ variable "solace_host" {
     })
 }
 variable "MsgVpns" {
-    type = map(object({
+    type = list(object({
         msgVpnName =string
         enabled = bool
         authenticationBasicProfileName = string
@@ -25,10 +25,10 @@ variable "MsgVpns" {
         serviceSmfTlsEnabled = bool
         tlsAllowDowngradeToPlainTextEnabled = bool
     }))
-    default = {}
+    default = []
 }
 variable "AclProfiles" {
-    type = map(object({
+    type = list(object({
         aclProfileName = string
         msgVpnName = string
         clientConnectDefaultAction = string
@@ -36,45 +36,45 @@ variable "AclProfiles" {
         subscribeTopicDefaultAction = string
         subscribeShareNameDefaultAction = string
     }))
-    default = {}
+    default = []
 }
 variable "ClientConnectExceptions" {
-    type = map(object({
+    type = list(object({
         aclProfileName = string
         clientConnectExceptionAddress = string
         msgVpnName = string
     }))
-    default = {}
+    default = []
 }
 variable "PublishTopicExceptions" {
-    type = map(object({
+    type = list(object({
         aclProfileName = string
         msgVpnName = string
         publishTopicException = string
         publishTopicExceptionSyntax = string
     }))
-    default = {}
+    default = []
 }
 variable "SubscribeTopicExceptions" {
-    type = map(object({
+    type = list(object({
         aclProfileName = string
         msgVpnName = string
         subscribeTopicException = string
         subscribeTopicExceptionSyntax = string
     }))
-    default = {}
+    default = []
 }
 variable "SubscribeShareNameExceptions" {
-    type = map(object({
+    type = list(object({
         aclProfileName = string
         msgVpnName = string
         subscribeShareNameException = string
         subscribeShareNameExceptionSyntax = string
     }))
-    default = {}
+    default = []
 }
 variable "ClientProfiles" {
-    type = map(object({
+    type = list(object({
         clientProfileName = string
         msgVpnName = string
         allowBridgeConnectionsEnabled = bool
@@ -85,11 +85,11 @@ variable "ClientProfiles" {
         allowSharedSubscriptionsEnabled = bool
         allowTransactedSessionsEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "ClientUsernames" {
-    type = map(object({
+    type = list(object({
         clientUsername = string
         msgVpnName = string
         enabled = bool
@@ -99,22 +99,22 @@ variable "ClientUsernames" {
         guaranteedEndpointPermissionOverrideEnabled = bool
         subscriptionManagerEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "AuthorizationGroups" {
-    type = map(object({
+    type = list(object({
         authorizationGroupName = string
         msgVpnName = string
         enabled = bool
         aclProfileName = string
         clientProfileName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "Queues" {
-    type = map(object({
+    type = list(object({
         queueName = string
         msgVpnName = string
         accessType = string
@@ -123,20 +123,20 @@ variable "Queues" {
         owner = string
         permission = string
     }))
-    default = {}
+    default = []
 }
 
 variable "Subscriptions" {
-    type = map(object({
+    type = list(object({
         subscriptionTopic = string
         queueName = string
         msgVpnName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "Bridges" {
-    type = map(object({
+    type = list(object({
         bridgeName = string
         bridgeVirtualRouter = string
         msgVpnName = string
@@ -145,11 +145,11 @@ variable "Bridges" {
         remoteAuthenticationBasicPassword = string
         remoteAuthenticationScheme = string
     }))
-    default = {}
+    default = []
 }
 
 variable "RemoteMsgVpns" {
-    type = map(object({
+    type = list(object({
         bridgeName = string
         bridgeVirtualRouter = string
         msgVpnName = string
@@ -161,49 +161,49 @@ variable "RemoteMsgVpns" {
         tlsEnabled = bool
         queueBinding = string
     }))
-    default = {}
+    default = []
 }
 
 variable "RemoteSubscriptions" {
-    type = map(object({
+    type = list(object({
         bridgeName = string
         bridgeVirtualRouter = string
         msgVpnName = string
         remoteSubscriptionTopic = string
         deliverAlwaysEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "ClientCertAuthorities" {
-    type = map(object({
+    type = list(object({
         certAuthorityName = string
         certContent = string
     }))
-    default = {}
+    default = []
 }
 
 variable "OcspTlsTrustedCommonNames" {
-    type = map(object({
+    type = list(object({
         certAuthorityName = string
         ocspTlsTrustedCommonName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "DmrClusters" {
-    type = map(object({
+    type = list(object({
         dmrClusterName = string
         enabled = bool
         authenticationBasicPassword = string
         authenticationClientCertContent = string
         authenticationClientCertPassword = string
     }))
-    default = {}
+    default = []
 }
 
 variable "DmrLinks" {
-    type = map(object({
+    type = list(object({
         dmrClusterName = string
         remoteNodeName = string
         enabled = bool
@@ -213,28 +213,28 @@ variable "DmrLinks" {
         transportCompressedEnabled = bool
         transportTlsEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "DmrLinkRemoteAddresses" {
-    type = map(object({
+    type = list(object({
         dmrClusterName = string
         remoteNodeName = string
         remoteAddress = string
     }))
-    default = {}
+    default = []
 }
 
 variable "DomainCertAuthorities" {
-    type = map(object({
+    type = list(object({
         certAuthorityName = string
         certContent = string
     }))
-    default = {}
+    default = []
 }
 
 variable "AuthenticationOauthProviders" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         oauthProviderName = string
         enabled = bool
@@ -251,110 +251,110 @@ variable "AuthenticationOauthProviders" {
         usernameClaimSource = string
         usernameValidateEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "DmrBridges" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         remoteMsgVpnName = string
         remoteNodeName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "JndiConnectionFactories" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         connectionFactoryName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "JndiQueues" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         queueName = string
         physicalName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "JndiTopics" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         topicName = string
         physicalName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "MqttSessions" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         mqttSessionClientId = string
         mqttSessionVirtualRouter = string
         enabled = bool
         owner = string
     }))
-    default = {}
+    default = []
 }
 
 variable "MqttSessionSubscriptions" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         mqttSessionClientId = string
         mqttSessionVirtualRouter = string
         subscriptionTopic = string
         subscriptionQos = number
     }))
-    default = {}
+    default = []
 }
 
 variable "QueueTemplates" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         queueTemplateName = string
         accessType = string
         permission = string
         queueNameFilter = string
     }))
-    default = {}
+    default = []
 }
 
 variable "ReplayLogs" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         replayLogName = string
         egressEnabled = bool
         ingressEnabled = bool
         maxSpoolUsage = number
     }))
-    default = {}
+    default = []
 }
 
 variable "ReplicatedTopics" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         replicatedTopic = string
         replicationMode = string
     }))
-    default = {}
+    default = []
 }
 
 variable "TopicEndpointTemplates" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         topicEndpointTemplateName = string
         accessType = string
         permission = string
         topicEndpointNameFilter = string
     }))
-    default = {}
+    default = []
 }
 
 variable "TopicEndpoints" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         topicEndpointName = string
         accessType = string
@@ -363,14 +363,14 @@ variable "TopicEndpoints" {
         owner = string
         permission = string
     }))
-    default = {}
+    default = []
 }
 
 variable "VirtualHostnames" {
-    type = map(object({
+    type = list(object({
         virtualHostname = string
         enabled = bool
         msgVpnName = string
     }))
-    default = {}
+    default = []
 }

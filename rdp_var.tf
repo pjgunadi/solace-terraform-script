@@ -1,6 +1,6 @@
 
 variable "RestDeliveryPoints" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         restDeliveryPointName = string
         enabled = bool
@@ -8,11 +8,11 @@ variable "RestDeliveryPoints" {
         service = string
         vendor = string
     }))
-    default = {}
+    default = []
 }
 
 variable "RdpQueueBindings" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         restDeliveryPointName = string
         queueBindingName = string
@@ -20,22 +20,22 @@ variable "RdpQueueBindings" {
         postRequestTarget = string
         requestTargetEvaluation = string
     }))
-    default = {}
+    default = []
 }
 
 variable "RdpQueueBindingRequestHeaders" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         restDeliveryPointName = string
         queueBindingName = string
         headerName = string
         headerValue = string
     }))
-    default = {}
+    default = []
 }
 
 variable "RdpRestConsumers" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         restDeliveryPointName = string
         restConsumerName = string
@@ -58,16 +58,16 @@ variable "RdpRestConsumers" {
         remotePort = number
         tlsEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "RdpRestConsumerOauthJwtClaims" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         restDeliveryPointName = string
         restConsumerName = string
         oauthJwtClaimName = string
         oauthJwtClaimValue = string
     }))
-    default = {}
+    default = []
 }

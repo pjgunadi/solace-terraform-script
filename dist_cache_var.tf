@@ -1,6 +1,6 @@
 
 variable "DistributedCaches" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         enabled = bool
@@ -8,11 +8,11 @@ variable "DistributedCaches" {
         scheduledDeleteMsgDayList = string
         scheduledDeleteMsgTimeList = string
     }))
-    default = {}
+    default = []
 }
 
 variable "DistributedCacheClusters" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         clusterName = string
@@ -23,11 +23,11 @@ variable "DistributedCacheClusters" {
         newTopicAdvertisementEnabled = bool
 
     }))
-    default = {}
+    default = []
 }
 
 variable "DistributedCacheClusterInstances" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         clusterName = string
@@ -36,46 +36,46 @@ variable "DistributedCacheClusterInstances" {
         autoStartEnabled = bool
         stopOnLostMsgEnabled = bool
     }))
-    default = {}
+    default = []
 }
 
 variable "DistributedCacheClusterTopics" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         clusterName = string
         topic = string
     }))
-    default = {}
+    default = []
 }
 
 variable "GlobalCachingHomeClusters" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         clusterName = string
         homeClusterName = string
     }))
-    default = {}
+    default = []
 }
 
 variable "GlobalCachingHomeClusterTopicPrefixes" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         clusterName = string
         homeClusterName = string
         topicPrefix = string
     }))
-    default = {}
+    default = []
 }
 
 variable "MqttRetainCaches" {
-    type = map(object({
+    type = list(object({
         msgVpnName = string
         cacheName = string
         enabled = bool
         msgLifetime = number
     }))
-    default = {}
+    default = []
 }

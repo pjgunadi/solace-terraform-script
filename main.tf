@@ -8,7 +8,9 @@ provider "restapi" {
 }
 
 resource "restapi_object" "msgVpns" {
-  for_each = var.MsgVpns
+  for_each = {
+    for v in var.MsgVpns : "${v.msgVpnName}" => v
+  }
   path = "/msgVpns"
   id_attribute = "msgVpnName"
   object_id = urlencode(each.value.msgVpnName)
@@ -16,7 +18,9 @@ resource "restapi_object" "msgVpns" {
 }
 
 resource "restapi_object" "aclProfiles" {
-  for_each = var.AclProfiles
+  for_each = {
+    for v in var.AclProfiles : "${v.msgVpnName}.${v.aclProfileName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles"
   id_attribute = "aclProfileName"
   object_id = urlencode(each.value.aclProfileName)
@@ -27,7 +31,9 @@ resource "restapi_object" "aclProfiles" {
 }
 
 resource "restapi_object" "clientConnectExceptions" {
-  for_each = var.ClientConnectExceptions
+  for_each = {
+    for v in var.ClientConnectExceptions : "${v.msgVpnName}.${v.aclProfileName}.${v.clientConnectExceptionAddress}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/clientConnectExceptions"
   id_attribute = "clientConnectExceptionAddress"
   object_id = urlencode(each.value.clientConnectExceptionAddress)
@@ -38,11 +44,12 @@ resource "restapi_object" "clientConnectExceptions" {
 }
 
 resource "restapi_object" "publishTopicExceptions" {
-  for_each = var.PublishTopicExceptions
+  for_each = {
+    for v in var.PublishTopicExceptions : "${v.msgVpnName}.${v.aclProfileName}.${v.publishTopicException}.${v.publishTopicExceptionSyntax}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/publishTopicExceptions"
   id_attribute = "publishTopicException"
   object_id = urlencode(each.value.publishTopicException)
-  force_new = ["publishTopicException","publishTopicExceptionSyntax"]
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/publishTopicExceptions/${urlencode(each.value.publishTopicExceptionSyntax)},{id}"
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/publishTopicExceptions/${urlencode(each.value.publishTopicExceptionSyntax)},{id}"
   data = jsonencode(each.value)
@@ -53,11 +60,12 @@ resource "restapi_object" "publishTopicExceptions" {
 }
 
 resource "restapi_object" "subscribeTopicExceptions" {
-  for_each = var.SubscribeTopicExceptions
+  for_each = {
+    for v in var.SubscribeTopicExceptions : "${v.msgVpnName}.${v.aclProfileName}.${v.subscribeTopicException}.${v.subscribeTopicExceptionSyntax}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/subscribeTopicExceptions"
   id_attribute = "subscribeTopicException"
   object_id = urlencode(each.value.subscribeTopicException)
-  force_new = ["subscribeTopicException","subscribeTopicExceptionSyntax"]
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/subscribeTopicExceptions/${urlencode(each.value.subscribeTopicExceptionSyntax)},{id}"
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/subscribeTopicExceptions/${urlencode(each.value.subscribeTopicExceptionSyntax)},{id}"
   data = jsonencode(each.value)
@@ -68,11 +76,12 @@ resource "restapi_object" "subscribeTopicExceptions" {
 }
 
 resource "restapi_object" "subscribeShareNameExceptions" {
-  for_each = var.SubscribeShareNameExceptions
+  for_each =  {
+    for v in var.SubscribeShareNameExceptions : "${v.msgVpnName}.${v.aclProfileName}.${v.subscribeShareNameException}.${v.subscribeShareNameExceptionSyntax}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/subscribeShareNameExceptions"
   id_attribute = "subscribeShareNameException"
   object_id = urlencode(each.value.subscribeShareNameException)
-  force_new = ["subscribeShareNameException","subscribeShareNameExceptionSyntax"]
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/subscribeShareNameExceptions/${urlencode(each.value.subscribeShareNameExceptionSyntax)},{id}"
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/aclProfiles/${urlencode(each.value.aclProfileName)}/subscribeShareNameExceptions/${urlencode(each.value.subscribeShareNameExceptionSyntax)},{id}"
   data = jsonencode(each.value)
@@ -83,7 +92,9 @@ resource "restapi_object" "subscribeShareNameExceptions" {
 }
 
 resource "restapi_object" "clientProfiles" {
-  for_each = var.ClientProfiles
+  for_each = {
+    for v in var.ClientProfiles : "${v.msgVpnName}.${v.clientProfileName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/clientProfiles"
   id_attribute = "clientProfileName"
   object_id = urlencode(each.value.clientProfileName)
@@ -94,7 +105,9 @@ resource "restapi_object" "clientProfiles" {
 }
 
 resource "restapi_object" "clientUsernames" {
-  for_each = var.ClientUsernames
+  for_each = {
+    for v in var.ClientUsernames : "${v.msgVpnName}.${v.clientUsername}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/clientUsernames"
   id_attribute = "clientUsername"
   object_id = urlencode(each.value.clientUsername)
@@ -107,7 +120,9 @@ resource "restapi_object" "clientUsernames" {
 }
 
 resource "restapi_object" "authorizationGroups" {
-  for_each = var.AuthorizationGroups
+  for_each = {
+    for v in var.AuthorizationGroups : "${v.msgVpnName}.${v.authorizationGroupName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/authorizationGroups"
   id_attribute = "authorizationGroupName"
   object_id = urlencode(each.value.authorizationGroupName)
@@ -120,7 +135,9 @@ resource "restapi_object" "authorizationGroups" {
 }
 
 resource "restapi_object" "queues" {
-  for_each = var.Queues
+  for_each = {
+    for v in var.Queues : "${v.msgVpnName}.${v.queueName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/queues"
   id_attribute = "queueName"
   object_id = urlencode(each.value.queueName)
@@ -131,7 +148,9 @@ resource "restapi_object" "queues" {
 }
 
 resource "restapi_object" "subscriptions" {
-  for_each = var.Subscriptions
+  for_each = {
+    for v in var.Subscriptions : "${v.msgVpnName}.${v.queueName}.${v.subscriptionTopic}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/queues/${urlencode(each.value.queueName)}/subscriptions"
   id_attribute = "subscriptionTopic"
   object_id = urlencode(each.value.subscriptionTopic)
@@ -142,11 +161,12 @@ resource "restapi_object" "subscriptions" {
 }
 
 resource "restapi_object" "bridges" {
-  for_each = var.Bridges
+  for_each = {
+    for v in var.Bridges : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges"
   id_attribute = "bridgeName"
   object_id = urlencode(each.value.bridgeName)
-  force_new = ["bridgeVirtualRouter"]
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/{id},${urlencode(each.value.bridgeVirtualRouter)}"
   update_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/{id},${urlencode(each.value.bridgeVirtualRouter)}"
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/{id},${urlencode(each.value.bridgeVirtualRouter)}"
@@ -157,11 +177,13 @@ resource "restapi_object" "bridges" {
 }
 
 resource "restapi_object" "remoteMsgVpns" {
-  for_each = var.RemoteMsgVpns
+  for_each = {
+    for v in var.RemoteMsgVpns : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteMsgVpnName}.${v.remoteMsgVpnLocation}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns"
   id_attribute = "remoteMsgVpnName"
   object_id = urlencode(each.value.remoteMsgVpnName)
-  force_new = ["remoteMsgVpnLocation","remoteMsgVpnInterface"]
+  force_new = ["${each.value.remoteMsgVpnInterface}"]
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns/{id},${urlencode(each.value.remoteMsgVpnLocation)},${urlencode(each.value.remoteMsgVpnInterface)}"
   update_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns/{id},${urlencode(each.value.remoteMsgVpnLocation)},${urlencode(each.value.remoteMsgVpnInterface)}"
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteMsgVpns/{id},${urlencode(each.value.remoteMsgVpnLocation)},${urlencode(each.value.remoteMsgVpnInterface)}"
@@ -172,7 +194,9 @@ resource "restapi_object" "remoteMsgVpns" {
 }
 
 resource "restapi_object" "remoteSubscriptions" {
-  for_each = var.RemoteSubscriptions
+  for_each = {
+    for v in var.RemoteSubscriptions : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteSubscriptionTopic}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/bridges/${urlencode(each.value.bridgeName)},${urlencode(each.value.bridgeVirtualRouter)}/remoteSubscriptions"
   id_attribute = "remoteSubscriptionTopic"
   object_id = urlencode(each.value.remoteSubscriptionTopic)
@@ -183,7 +207,9 @@ resource "restapi_object" "remoteSubscriptions" {
 }
 
 resource "restapi_object" "clientCertAuthorities" {
-  for_each = var.ClientCertAuthorities
+  for_each = {
+    for v in var.ClientCertAuthorities : "${v.certAuthorityName}" => v
+  }
   path = "/clientCertAuthorities"
   id_attribute = "certAuthorityName"
   object_id = urlencode(each.value.certAuthorityName)
@@ -191,7 +217,9 @@ resource "restapi_object" "clientCertAuthorities" {
 }
 
 resource "restapi_object" "ocspTlsTrustedCommonNames" {
-  for_each = var.OcspTlsTrustedCommonNames
+  for_each = {
+    for v in var.OcspTlsTrustedCommonNames : "${v.certAuthorityName}.${v.ocspTlsTrustedCommonNames}" => v
+  }
   path = "/clientCertAuthorities/${urlencode(each.value.certAuthorityName)}/ocspTlsTrustedCommonNames"
   id_attribute = "ocspTlsTrustedCommonNames"
   object_id = urlencode(each.value.ocspTlsTrustedCommonNames)
@@ -202,7 +230,9 @@ resource "restapi_object" "ocspTlsTrustedCommonNames" {
 }
 
 resource "restapi_object" "dmrClusters" {
-  for_each = var.DmrClusters
+  for_each = {
+    for v in var.DmrClusters : "${v.dmrClusterName}" => v
+  }
   path = "/dmrClusters"
   id_attribute = "dmrClusterName"
   object_id = urlencode(each.value.dmrClusterName)
@@ -210,7 +240,9 @@ resource "restapi_object" "dmrClusters" {
 }
 
 resource "restapi_object" "dmrLinks" {
-  for_each = var.DmrLinks
+  for_each = {
+    for v in var.DmrLinks : "${v.dmrClusterName}.${v.remoteNodeName}" => v
+  }
   path = "/dmrClusters/${urlencode(each.value.dmrClusterName)}/links"
   id_attribute = "remoteNodeName"
   object_id = urlencode(each.value.remoteNodeName)
@@ -221,7 +253,9 @@ resource "restapi_object" "dmrLinks" {
 }
 
 resource "restapi_object" "dmrLinkRemoteAddresses" {
-  for_each = var.DmrLinkRemoteAddresses
+  for_each = {
+    for v in var.DmrLinkRemoteAddresses : "${v.dmrClusterName}.${v.remoteNodeName}.${v.remoteAddress}" => v
+  }
   path = "/dmrClusters/${urlencode(each.value.dmrClusterName)}/links/${urlencode(each.value.remoteNodeName)}/remoteAddresses"
   id_attribute = "remoteAddress"
   object_id = urlencode(each.value.remoteAddress)
@@ -232,7 +266,9 @@ resource "restapi_object" "dmrLinkRemoteAddresses" {
 }
 
 resource "restapi_object" "domainCertAuthorities" {
-  for_each = var.DomainCertAuthorities
+  for_each = {
+    for v in var.DomainCertAuthorities : "${v.certAuthorityName}" => v
+  }
   path = "/domainCertAuthorities"
   id_attribute = "certAuthorityName"
   object_id = urlencode(each.value.certAuthorityName)
@@ -240,7 +276,9 @@ resource "restapi_object" "domainCertAuthorities" {
 }
 
 resource "restapi_object" "authenticationOauthProviders" {
-  for_each = var.AuthenticationOauthProviders
+  for_each = {
+    for v in var.AuthenticationOauthProviders : "${v.msgVpnName}.${v.oauthProviderName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/authenticationOauthProviders"
   id_attribute = "oauthProviderName"
   object_id = urlencode(each.value.oauthProviderName)
@@ -251,7 +289,9 @@ resource "restapi_object" "authenticationOauthProviders" {
 }
 
 resource "restapi_object" "dmrBridges" {
-  for_each = var.DmrBridges
+  for_each = {
+    for v in var.DmrBridges : "${v.msgVpnName}.${v.remoteNodeName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/dmrBridges"
   id_attribute = "remoteNodeName"
   object_id = urlencode(each.value.remoteNodeName)
@@ -262,7 +302,9 @@ resource "restapi_object" "dmrBridges" {
 }
 
 resource "restapi_object" "jndiConnectionFactories" {
-  for_each = var.JndiConnectionFactories
+  for_each = {
+    for v in var.JndiConnectionFactories : "${v.msgVpnName}.${v.connectionFactoryName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/jndiConnectionFactories"
   id_attribute = "connectionFactoryName"
   object_id = urlencode(each.value.connectionFactoryName)
@@ -273,7 +315,9 @@ resource "restapi_object" "jndiConnectionFactories" {
 }
 
 resource "restapi_object" "jndiQueues" {
-  for_each = var.JndiQueues
+  for_each = {
+    for v in var.JndiQueues : "${v.msgVpnName}.${v.queueName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/jndiQueues"
   id_attribute = "queueName"
   object_id = urlencode(each.value.queueName)
@@ -284,7 +328,9 @@ resource "restapi_object" "jndiQueues" {
 }
 
 resource "restapi_object" "jndiTopics" {
-  for_each = var.JndiTopics
+  for_each = {
+    for v in var.JndiTopics : "${v.msgVpnName}.${v.topicName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/jndiTopics"
   id_attribute = "topicName"
   object_id = urlencode(each.value.topicName)
@@ -295,11 +341,13 @@ resource "restapi_object" "jndiTopics" {
 }
 
 resource "restapi_object" "mqttSessions" {
-  for_each = var.MqttSessions
+  for_each = {
+    for v in var.MqttSessions : "${v.msgVpnName}.${v.mqttSessionClientId}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions"
   id_attribute = "mqttSessionClientId"
   object_id = urlencode(each.value.mqttSessionClientId)
-  force_new = ["mqttSessionVirtualRouter"]
+  force_new = ["${each.value.mqttSessionVirtualRouter}"]
   read_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}"
   update_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}"
   destroy_path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}"
@@ -310,10 +358,13 @@ resource "restapi_object" "mqttSessions" {
 }
 
 resource "restapi_object" "mqttSessionSubscriptions" {
-  for_each = var.MqttSessionSubscriptions
+  for_each = {
+    for v in var.MqttSessionSubscriptions : "${v.msgVpnName}.${v.mqttSessionClientId}.${v.subscriptionTopic}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/mqttSessions/{id},${urlencode(each.value.mqttSessionVirtualRouter)}/subscriptions"
   id_attribute = "subscriptionTopic"
   object_id = urlencode(each.value.subscriptionTopic)
+  force_new = ["${each.value.mqttSessionVirtualRouter}"]
   data = jsonencode(each.value)
   depends_on = [
     restapi_object.mqttSessions,
@@ -321,7 +372,9 @@ resource "restapi_object" "mqttSessionSubscriptions" {
 }
 
 resource "restapi_object" "queueTemplates" {
-  for_each = var.QueueTemplates
+  for_each = {
+    for v in var.QueueTemplates : "${v.msgVpnName}.${v.queueTemplateName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/queueTemplates"
   id_attribute = "queueTemplateName"
   object_id = urlencode(each.value.queueTemplateName)
@@ -332,7 +385,9 @@ resource "restapi_object" "queueTemplates" {
 }
 
 resource "restapi_object" "replayLogs" {
-  for_each = var.ReplayLogs
+  for_each = {
+    for v in var.ReplayLogs : "${v.msgVpnName}.${v.replayLogName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/replayLogs"
   id_attribute = "replayLogName"
   object_id = urlencode(each.value.replayLogName)
@@ -343,7 +398,9 @@ resource "restapi_object" "replayLogs" {
 }
 
 resource "restapi_object" "replicatedTopics" {
-  for_each = var.ReplicatedTopics
+  for_each = {
+    for v in var.ReplicatedTopics : "${v.msgVpnName}.${v.replicatedTopic}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/replicatedTopics"
   id_attribute = "replicatedTopic"
   object_id = urlencode(each.value.replicatedTopic)
@@ -354,7 +411,9 @@ resource "restapi_object" "replicatedTopics" {
 }
 
 resource "restapi_object" "topicEndpointTemplates" {
-  for_each = var.TopicEndpointTemplates
+  for_each = {
+    for v in var.TopicEndpointTemplates : "${v.msgVpnName}.${v.topicEndpointTemplateName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/topicEndpointTemplates"
   id_attribute = "topicEndpointTemplateName"
   object_id = urlencode(each.value.topicEndpointTemplateName)
@@ -365,7 +424,9 @@ resource "restapi_object" "topicEndpointTemplates" {
 }
 
 resource "restapi_object" "topicEndpoints" {
-  for_each = var.TopicEndpoints
+  for_each = {
+    for v in var.TopicEndpoints : "${v.msgVpnName}.${v.topicEndpointName}" => v
+  }
   path = "/msgVpns/${urlencode(each.value.msgVpnName)}/topicEndpoints"
   id_attribute = "topicEndpointName"
   object_id = urlencode(each.value.topicEndpointName)
@@ -376,7 +437,9 @@ resource "restapi_object" "topicEndpoints" {
 }
 
 resource "restapi_object" "virtualHostnames" {
-  for_each = var.VirtualHostnames
+  for_each = {
+    for v in var.VirtualHostnames : "${v.virtualHostname}" => v
+  }
   path = "/virtualHostnames"
   id_attribute = "virtualHostname"
   object_id = urlencode(each.value.virtualHostname)
