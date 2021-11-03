@@ -29,15 +29,16 @@ solace_host = {
 Define Solace resources in variable file; `terraform.tfvars`. Each resource is directly mapped to Solace SEMPv2 API object. The object variable is defined using the following format:
 ```
 <ObjectName> = {
-  <arbitrary_object_key> = {
+  [ {
     <attribute_name> = <attribute_value>
     ...
-  }
+  },
   <next_object_key> = {
     <attribute_name> = <attribute_value>
     ...
-  }
+  },
   ...
+  ]
 }
 ```
 The list of available objects and its attributes can be found in [variable definition file](./variable.tf)
