@@ -1,13 +1,13 @@
 terraform {
   required_providers {
     restapi = {
-      source = "fmontezuma/restapi"
-      version = "1.14.1"
+      source = "Mastercard/restapi"
+      version = "1.17.0"
       # source = "localhost/pgunadi/restapi"
       # version = "~> 0.0.1"
     }
   }
-   required_version = "~> 1.0.9"
+  #  required_version = "~> 1.3.2"
 }
 
 
