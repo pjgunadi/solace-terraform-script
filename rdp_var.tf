@@ -3,10 +3,10 @@ variable "RestDeliveryPoints" {
     type = list(object({
         msgVpnName = string
         restDeliveryPointName = string
-        enabled = bool
-        clientProfileName = string
-        service = string
-        vendor = string
+        clientProfileName = optional(string)
+        enabled = optional(bool)
+        service = optional(string)
+        vendor = optional(string)
     }))
     default = []
 }
@@ -16,9 +16,20 @@ variable "RdpQueueBindings" {
         msgVpnName = string
         restDeliveryPointName = string
         queueBindingName = string
-        gatewayReplaceTargetAuthorityEnabled = bool
-        postRequestTarget = string
-        requestTargetEvaluation = string
+        gatewayReplaceTargetAuthorityEnabled = optional(bool)
+        postRequestTarget = optional(string)
+        requestTargetEvaluation = optional(string)
+    }))
+    default = []
+}
+
+variable "RdpQueueBindingProtectedRequestHeaders" {
+    type = list(object({
+        msgVpnName = string
+        restDeliveryPointName = string
+        queueBindingName = string
+        headerName = string
+        headerValue = optional(string)
     }))
     default = []
 }
@@ -29,7 +40,7 @@ variable "RdpQueueBindingRequestHeaders" {
         restDeliveryPointName = string
         queueBindingName = string
         headerName = string
-        headerValue = string
+        headerValue = optional(string)
     }))
     default = []
 }
@@ -37,26 +48,38 @@ variable "RdpQueueBindingRequestHeaders" {
 variable "RdpRestConsumers" {
     type = list(object({
         msgVpnName = string
-        restDeliveryPointName = string
         restConsumerName = string
-        enabled = bool
-        authenticationClientCertContent = string
-        authenticationClientCertPassword = string
-        authenticationHttpBasicPassword = string
-        authenticationHttpBasicUsername = string
-        authenticationHttpHeaderName = string
-        authenticationHttpHeaderValue = string
-        authenticationOauthClientId = string
-        authenticationOauthClientScope = string
-        authenticationOauthClientSecret = string
-        authenticationOauthClientTokenEndpoint = string
-        authenticationOauthJwtSecretKey = string
-        authenticationOauthJwtTokenEndpoint = string
-        authenticationScheme = string
-        httpMethod = string
-        remoteHost = string
-        remotePort = number
-        tlsEnabled = bool
+        restDeliveryPointName = string
+        authenticationAwsAccessKeyId = optional(string)
+        authenticationAwsRegion = optional(string)
+        authenticationAwsSecretAccessKey = optional(string)
+        authenticationAwsService = optional(string)
+        authenticationClientCertContent = optional(string)
+        authenticationClientCertPassword = optional(string)
+        authenticationHttpBasicPassword = optional(string)
+        authenticationHttpBasicUsername = optional(string)
+        authenticationHttpHeaderName = optional(string)
+        authenticationHttpHeaderValue = optional(string)
+        authenticationOauthClientId = optional(string)
+        authenticationOauthClientScope = optional(string)
+        authenticationOauthClientSecret = optional(string)
+        authenticationOauthClientTokenEndpoint = optional(string)
+        authenticationOauthClientTokenExpiryDefault = optional(number)
+        authenticationOauthJwtSecretKey = optional(string)
+        authenticationOauthJwtTokenEndpoint = optional(string)
+        authenticationOauthJwtTokenExpiryDefault = optional(number)
+        authenticationScheme = optional(string)
+        enabled = optional(bool)
+        httpMethod = optional(string)
+        localInterface = optional(string)
+        maxPostWaitTime = optional(number)
+        outgoingConnectionCount = optional(number)
+        proxyName = optional(string)
+        remoteHost = optional(string)
+        remotePort = optional(number)
+        retryDelay = optional(number)
+        tlsCipherSuiteList = optional(string)
+        tlsEnabled = optional(bool)
     }))
     default = []
 }

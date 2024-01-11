@@ -1,11 +1,8 @@
 
 solace_host = {
-  uri = "http://127.0.0.1:8080/SEMP/v2/config/"
-  insecure = true
+  uri = "http://127.0.0.1:8080"
   username = "admin"
   password = "yourpassword"
-  write_returns_object = true
-  debug = true
 }
 
 MsgVpns = [
@@ -182,31 +179,5 @@ RemoteSubscriptions = [
     deliverAlwaysEnabled = true
     msgVpnName = "myvpn1"
     remoteSubscriptionTopic = "topic/a*/>"
-  }
-]
-
-Queues_Range = [
-  {
-    start = 1
-    limit = 11
-    queueNamePrefix = "test.tf.q.range"
-    properties = {
-      msgVpnName = "paulus_vpn"
-      accessType = "exclusive"
-      egressEnabled = true
-      ingressEnabled = true
-      owner = "testusertf"
-      permission = "no-access"
-    }
-  }
-]
-
-Subscriptions_Range = [
-  {
-    start = 1
-    limit = 11
-    queueNamePrefix = "test.tf.q.range"
-    topicPrefix = "topic/tf/range"
-    msgVpnName = "paulus_vpn"
   }
 ]

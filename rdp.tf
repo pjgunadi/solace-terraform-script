@@ -1,65 +1,120 @@
 
-resource "restapi_object" "restDeliveryPoints" {
+resource "solacebroker_msg_vpn_rest_delivery_point" "restDeliveryPoints" {
   for_each = {
     for v in var.RestDeliveryPoints : "${v.msgVpnName}.${v.restDeliveryPointName}" => v
   }
-  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/restDeliveryPoints"
-  id_attribute = "restDeliveryPointName"
-  object_id = urlencode(each.value.restDeliveryPointName)
-  data = jsonencode(each.value)
+  msg_vpn_name = each.value.msgVpnName
+  rest_delivery_point_name = each.value.restDeliveryPointName
+  client_profile_name = each.value.clientProfileName
+  enabled = each.value.enabled
+  service = each.value.service
+  vendor = each.value.vendor
+
   depends_on = [
-    restapi_object.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
-resource "restapi_object" "rdpQueueBindings" {
+resource "solacebroker_msg_vpn_rest_delivery_point_queue_binding" "rdpQueueBindings" {
   for_each = {
     for v in var.RdpQueueBindings : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.queueBindingName}" => v
   }
-  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/restDeliveryPoints/${urlencode(each.value.restDeliveryPointName)}/queueBindings"
-  id_attribute = "queueBindingName"
-  object_id = urlencode(each.value.queueBindingName)
-  data = jsonencode(each.value)
+  msg_vpn_name = each.value.msgVpnName
+  rest_delivery_point_name = each.value.restDeliveryPointName
+  queue_binding_name = each.value.queueBindingName
+  gateway_replace_target_authority_enabled = each.value.gatewayReplaceTargetAuthorityEnabled
+  post_request_target = each.value.postRequestTarget
+  request_target_evaluation = each.value.requestTargetEvaluation
+
   depends_on = [
-    restapi_object.restDeliveryPoints
+    solacebroker_msg_vpn_rest_delivery_point.restDeliveryPoints
   ]
 }
 
-resource "restapi_object" "rdpQueueBindingRequestHeaders" {
+resource "solacebroker_msg_vpn_rest_delivery_point_queue_binding_protected_request_header" "rdpQueueBindingProtectedRequestHeaders" {
+  for_each = {
+    for v in var.RdpQueueBindingProtectedRequestHeaders : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.queueBindingName}.${v.headerName}" => v
+  }
+  msg_vpn_name = each.value.msgVpnName
+  rest_delivery_point_name = each.value.restDeliveryPointName
+  queue_binding_name = each.value.queueBindingName
+  header_name = each.value.headerName
+  header_value = each.value.headerValue
+  
+  depends_on = [
+    solacebroker_msg_vpn_rest_delivery_point_queue_binding.rdpQueueBindings
+  ]
+}
+
+resource "solacebroker_msg_vpn_rest_delivery_point_queue_binding_request_header" "rdpQueueBindingRequestHeaders" {
   for_each = {
     for v in var.RdpQueueBindingRequestHeaders : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.queueBindingName}.${v.headerName}" => v
   }
-  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/restDeliveryPoints/${urlencode(each.value.restDeliveryPointName)}/queueBindings/${urlencode(each.value.queueBindingName)}/requestHeaders"
-  id_attribute = "headerName"
-  object_id = urlencode(each.value.headerName)
-  data = jsonencode(each.value)
+  msg_vpn_name = each.value.msgVpnName
+  rest_delivery_point_name = each.value.restDeliveryPointName
+  queue_binding_name = each.value.queueBindingName
+  header_name = each.value.headerName
+  header_value = each.value.headerValue
+
   depends_on = [
-    restapi_object.rdpQueueBindings
+    solacebroker_msg_vpn_rest_delivery_point_queue_binding.rdpQueueBindings
   ]
 }
 
-resource "restapi_object" "rdpRestConsumers" {
-  for_each = {
-    for v in var.RdpRestConsumers : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.restConsumerName}" => v
-  }
-  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/restDeliveryPoints/${urlencode(each.value.restDeliveryPointName)}/restConsumers"
-  id_attribute = "restConsumerName"
-  object_id = urlencode(each.value.restConsumerName)
-  data = jsonencode(each.value)
-  depends_on = [
-    restapi_object.restDeliveryPoints
-  ]
+resource "solacebroker_msg_vpn_rest_delivery_point_rest_consumer" "rdpRestConsumers" {
+    for_each = {
+        for v in var.RdpRestConsumers : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.restConsumerName}" => v
+    }
+    msg_vpn_name = each.value.msgVpnName
+    rest_consumer_name = each.value.restConsumerName
+    rest_delivery_point_name = each.value.restDeliveryPointName
+    authentication_aws_access_key_id = each.value.authenticationAwsAccessKeyId
+    authentication_aws_region = each.value.authenticationAwsRegion
+    authentication_aws_secret_access_key = each.value.authenticationAwsSecretAccessKey
+    authentication_aws_service = each.value.authenticationAwsService
+    authentication_client_cert_content = each.value.authenticationClientCertContent
+    authentication_client_cert_password = each.value.authenticationClientCertPassword
+    authentication_http_basic_password = each.value.authenticationHttpBasicPassword
+    authentication_http_basic_username = each.value.authenticationHttpBasicUsername
+    authentication_http_header_name = each.value.authenticationHttpHeaderName
+    authentication_http_header_value = each.value.authenticationHttpHeaderValue
+    authentication_oauth_client_id = each.value.authenticationOauthClientId
+    authentication_oauth_client_scope = each.value.authenticationOauthClientScope
+    authentication_oauth_client_secret = each.value.authenticationOauthClientSecret
+    authentication_oauth_client_token_endpoint = each.value.authenticationOauthClientTokenEndpoint
+    authentication_oauth_client_token_expiry_default = each.value.authenticationOauthClientTokenExpiryDefault
+    authentication_oauth_jwt_secret_key = each.value.authenticationOauthJwtSecretKey
+    authentication_oauth_jwt_token_endpoint = each.value.authenticationOauthJwtTokenEndpoint
+    authentication_oauth_jwt_token_expiry_default = each.value.authenticationOauthJwtTokenExpiryDefault
+    authentication_scheme = each.value.authenticationScheme
+    enabled = each.value.enabled
+    http_method = each.value.httpMethod
+    local_interface = each.value.localInterface
+    max_post_wait_time = each.value.maxPostWaitTime
+    outgoing_connection_count = each.value.outgoingConnectionCount
+    proxy_name = each.value.proxyName
+    remote_host = each.value.remoteHost
+    remote_port = each.value.remotePort
+    retry_delay = each.value.retryDelay
+    tls_cipher_suite_list = each.value.tlsCipherSuiteList
+    tls_enabled = each.value.tlsEnabled
+
+    depends_on = [
+        solacebroker_msg_vpn_rest_delivery_point.restDeliveryPoints
+    ]
 }
 
-resource "restapi_object" "rdpRestConsumerOauthJwtClaims" {
+resource "solacebroker_msg_vpn_rest_delivery_point_rest_consumer_oauth_jwt_claim" "rdpRestConsumerOauthJwtClaims" {
   for_each = {
     for v in var.RdpRestConsumerOauthJwtClaims : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.restConsumerName}.${v.oauthJwtClaimName}" => v
   }
-  path = "/msgVpns/${urlencode(each.value.msgVpnName)}/restDeliveryPoints/${urlencode(each.value.restDeliveryPointName)}/restConsumers/${urlencode(each.value.restConsumerName)}/oauthJwtClaims"
-  id_attribute = "oauthJwtClaimName"
-  object_id = urlencode(each.value.oauthJwtClaimName)
-  data = jsonencode(each.value)
+  msg_vpn_name = each.value.msgVpnName
+  rest_delivery_point_name = each.value.restDeliveryPointName
+  rest_consumer_name = each.value.restConsumerName
+  oauth_jwt_claim_name = each.value.oauthJwtClaimName
+  oauth_jwt_claim_value = each.value.oauthJwtClaimValue
+  
   depends_on = [
-    restapi_object.rdpRestConsumers
+    solacebroker_msg_vpn_rest_delivery_point_rest_consumer.rdpRestConsumers
   ]
 }

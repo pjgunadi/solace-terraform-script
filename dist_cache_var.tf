@@ -3,10 +3,11 @@ variable "DistributedCaches" {
     type = list(object({
         msgVpnName = string
         cacheName = string
-        enabled = bool
-        heartbeat = number
-        scheduledDeleteMsgDayList = string
-        scheduledDeleteMsgTimeList = string
+        cacheVirtualRouter = optional(string)
+        enabled = optional(bool)
+        heartbeat = optional(number)
+        scheduledDeleteMsgDayList = optional(string)
+        scheduledDeleteMsgTimeList = optional(string)
     }))
     default = []
 }
@@ -16,35 +17,26 @@ variable "DistributedCacheClusters" {
         msgVpnName = string
         cacheName = string
         clusterName = string
-        enabled = bool
-        deliverToOneOverrideEnabled = bool
-        globalCachingEnabled = bool
-        msgLifetime = number
-        newTopicAdvertisementEnabled = bool
+        deliverToOneOverrideEnabled = optional(bool)
+        enabled = optional(bool)
+        globalCachingEnabled = optional(bool)
+        globalCachingHeartbeat = optional(number)
+        globalCachingTopicLifetime = optional(number)
+        maxMemory = optional(number)
+        maxMsgPerTopic = optional(number)
+        maxRequestQueueDepth = optional(number)
+        maxTopicCount = optional(number)
+        msgLifetime = optional(number)
+        newTopicAdvertisementEnabled = optional(bool)
+        #Thresholds
+        eventDataByteRateThreshold = optional(map(number))
+        eventDataMsgRateThreshold = optional(map(number))
+        eventMaxMemoryThreshold = optional(map(number))
+        eventMaxTopicsThreshold = optional(map(number))
+        eventRequestQueueDepthThreshold = optional(map(number))
+        eventRequestRateThreshold = optional(map(number))
+        eventResponseRateThreshold = optional(map(number))
 
-    }))
-    default = []
-}
-
-variable "DistributedCacheClusterInstances" {
-    type = list(object({
-        msgVpnName = string
-        cacheName = string
-        clusterName = string
-        instanceName = string
-        enabled = bool
-        autoStartEnabled = bool
-        stopOnLostMsgEnabled = bool
-    }))
-    default = []
-}
-
-variable "DistributedCacheClusterTopics" {
-    type = list(object({
-        msgVpnName = string
-        cacheName = string
-        clusterName = string
-        topic = string
     }))
     default = []
 }
@@ -70,12 +62,26 @@ variable "GlobalCachingHomeClusterTopicPrefixes" {
     default = []
 }
 
-variable "MqttRetainCaches" {
+variable "DistributedCacheClusterInstances" {
     type = list(object({
         msgVpnName = string
         cacheName = string
-        enabled = bool
-        msgLifetime = number
+        clusterName = string
+        instanceName = string
+        autoStartEnabled = optional(bool)
+        enabled = optional(bool)
+        stopOnLostMsgEnabled = optional(bool)
     }))
     default = []
 }
+
+variable "DistributedCacheClusterTopics" {
+    type = list(object({
+        msgVpnName = string
+        cacheName = string
+        clusterName = string
+        topic = string
+    }))
+    default = []
+}
+
