@@ -2,11 +2,11 @@ terraform {
   required_providers {
     restapi = {
       source = "Mastercard/restapi"
-      version = "1.18.2"
+      version = "1.20.0"
     }
     solacebroker = {
       source = "registry.terraform.io/solaceproducts/solacebroker"
-      version = "0.9.1"
+      version = "1.0.1"
     }
   }
 }

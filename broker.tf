@@ -83,7 +83,7 @@ resource "solacebroker_broker" "broker" {
     tls_standard_domain_certificate_authorities_enabled = each.value.tlsStandardDomainCertificateAuthoritiesEnabled
     tls_ticket_lifetime = each.value.tlsTicketLifetime
     web_manager_allow_unencrypted_wizards_enabled = each.value.webManagerAllowUnencryptedWizardsEnabled
-    web_manager_customization = each.value.webManagerCustomization
+    # web_manager_customization = each.value.webManagerCustomization
     web_manager_redirect_http_enabled = each.value.webManagerRedirectHttpEnabled
     web_manager_redirect_http_override_tls_port = each.value.webManagerRedirectHttpOverrideTlsPort
 }
