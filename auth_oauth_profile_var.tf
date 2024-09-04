@@ -1,4 +1,4 @@
-variable "AuthorizationOauthProfiles" {
+variable "AuthenticationOauthProfiles" {
     type = list(object({
         msgVpnName = string
         oauthProfileName = string

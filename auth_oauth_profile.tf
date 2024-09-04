@@ -1,6 +1,6 @@
-resource "solacebroker_msg_vpn_authentication_oauth_profile" "authorizationOauthProfiles" {
+resource "solacebroker_msg_vpn_authentication_oauth_profile" "authenticationOauthProfiles" {
     for_each = {
-        for v in var.AuthorizationOauthProfiles : "${v.msgVpnName}.${v.oauthProfileName}" => v
+        for v in var.AuthenticationOauthProfiles : "${v.msgVpnName}.${v.oauthProfileName}" => v
     }
     msg_vpn_name = each.value.msgVpnName
     oauth_profile_name = each.value.oauthProfileName
@@ -39,7 +39,7 @@ resource "solacebroker_msg_vpn_authentication_oauth_profile" "authorizationOauth
   ]
 }
 
-resource "solacebroker_msg_vpn_authentication_oauth_profile_client_required_claim" "authorizationOauthProfileClientRequiredClaims" {
+resource "solacebroker_msg_vpn_authentication_oauth_profile_client_required_claim" "authenticationOauthProfileClientRequiredClaims" {
     for_each = {
         for v in var.AuthOauthProfileClientRequiredClaims : "${v.msgVpnName}.${v.oauthProfileName}.${v.clientRequiredClaimName}" => v
     }
@@ -49,11 +49,11 @@ resource "solacebroker_msg_vpn_authentication_oauth_profile_client_required_clai
     client_required_claim_value = each.value.clientRequiredClaimValue
 
     depends_on = [
-        solacebroker_msg_vpn_authentication_oauth_profile.authorizationOauthProfiles
+        solacebroker_msg_vpn_authentication_oauth_profile.authenticationOauthProfiles
     ]
 }
 
-resource "solacebroker_msg_vpn_authentication_oauth_profile_resource_server_required_claim" "authorizationOauthProfileResourceServerRequiredClaims" {
+resource "solacebroker_msg_vpn_authentication_oauth_profile_resource_server_required_claim" "authenticationOauthProfileResourceServerRequiredClaims" {
     for_each = {
         for v in var.AuthOauthProfileResourceServerRequiredClaims : "${v.msgVpnName}.${v.oauthProfileName}.${v.resourceServerRequiredClaimName}" => v
     }
@@ -63,6 +63,6 @@ resource "solacebroker_msg_vpn_authentication_oauth_profile_resource_server_requ
     resource_server_required_claim_value = each.value.resourceServerRequiredClaimValue
     
     depends_on = [
-        solacebroker_msg_vpn_authentication_oauth_profile.authorizationOauthProfiles
+        solacebroker_msg_vpn_authentication_oauth_profile.authenticationOauthProfiles
     ]
 }
