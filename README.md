@@ -25,25 +25,24 @@ solace_host = {
 ## Configure Solace PubSub+ Resources
 Define Solace resources in variable file; `terraform.tfvars`. Each resource is directly mapped to Solace SEMPv2 API object. The object variable is defined using the following format:
 ```
-<ObjectName> = {
-  [ {
+<ObjectName> = [
+  {
     <attribute_name> = <attribute_value>
     ...
   },
-  <next_object_key> = {
+  {
     <attribute_name> = <attribute_value>
     ...
   },
   ...
-  ]
-}
+]
 ```
 The list of available objects and its attributes can be found in `*_var.tf` files
 
 Below is an example for defining `MsgVpns` object:
 ```
-MsgVpns = {
-    myvpn1 = {
+MsgVpns = [
+    {
         msgVpnName ="myvpn1"
         enabled = true
         authenticationBasicProfileName = ""
@@ -59,7 +58,7 @@ MsgVpns = {
         serviceSmfTlsEnabled = false
         tlsAllowDowngradeToPlainTextEnabled = false
     }
-}
+]
 ```
 ## Configure ClientProfiles in Solace Cloud Service
 1. Set variable `is_cloud_service` to `true`
