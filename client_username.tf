@@ -15,7 +15,8 @@ resource "solacebroker_msg_vpn_client_username" "clientUsernames" {
   depends_on = [
     solacebroker_msg_vpn.msgVpns,
     solacebroker_msg_vpn_acl_profile.aclProfiles,
-    solacebroker_msg_vpn_client_profile.clientProfiles
+    solacebroker_msg_vpn_client_profile.clientProfiles,
+    solacebroker_msg_vpn_telemetry_profile.telemetryProfiles
   ]
 }
 
