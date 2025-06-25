@@ -1,5 +1,6 @@
 resource "solacebroker_broker" "broker" {
     for_each = var.Broker
+    auth_brute_force_protection_enabled = each.value.authBruteForceProtectionEnabled
     auth_client_cert_revocation_check_mode = each.value.authClientCertRevocationCheckMode
     config_sync_authentication_client_cert_max_chain_depth = each.value.configSyncAuthenticationClientCertMaxChainDepth
     config_sync_authentication_client_cert_validate_date_enabled = each.value.configSyncAuthenticationClientCertValidateDateEnabled

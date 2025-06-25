@@ -14,6 +14,7 @@ variable "ClientProfiles" {
         compressionEnabled = optional(bool)
         elidingDelay = optional(number)
         elidingEnabled = optional(bool)
+        maxAmqpLinkCount = optional(number)
         maxConnectionCountPerClientUsername = optional(number)
         maxEgressFlowCount = optional(number)
         maxEndpointCountPerClientUsername = optional(number)

@@ -13,6 +13,7 @@ variable "CloudClientProfiles" {
         elidingDelay = optional(number)
         elidingEnabled = optional(bool)
         elidingMaxTopicCount = optional(number)
+        maxAmqpLinkCount = optional(number)
         maxConnectionCountPerClientUsername = optional(number)
         maxEgressFlowCount = optional(number)
         maxEndpointCountPerClientUsername = optional(number)

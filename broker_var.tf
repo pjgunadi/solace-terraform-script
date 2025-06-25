@@ -1,5 +1,6 @@
 variable "Broker" {
     type = map(object({
+        authBruteForceProtectionEnabled = optional (bool)
         authClientCertRevocationCheckMode = optional(string)
         configSyncAuthenticationClientCertMaxChainDepth = optional(number)
         configSyncAuthenticationClientCertValidateDateEnabled = optional(bool)

@@ -21,6 +21,7 @@ variable "AuthenticationOauthProfiles" {
         issuer = optional(string)
         mqttUsernameValidateEnabled = optional(bool)
         oauthRole = optional(string)
+        proxyName = optional(string)
         resourceServerParseAccessTokenEnabled = optional(bool)
         resourceServerRequiredAudience = optional(string)
         resourceServerRequiredIssuer = optional(string)

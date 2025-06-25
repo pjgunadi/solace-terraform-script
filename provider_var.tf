@@ -18,8 +18,8 @@ variable "solace_cloud" {
 variable "solace_host" {
     type = object({
         url = string
-        username = string
-        password = string
+        username = optional(string)
+        password = optional(string)
         bearerToken = optional(string)
         insecureSkipVerify = optional(bool)
         requestMinInterval = optional(string)
@@ -31,7 +31,7 @@ variable "solace_host" {
     })
 }
 
-variable "is_cloud_service" {
+variable "is_old_cloud_service" {
     description = "Solace Broker Cloud Service Flag"
     type = bool
     default = false

@@ -13,7 +13,9 @@
 This repository provides a collection of terraform scripts for configuring Solace broker.
 
 ## Required Configuration
-Solace SEMP API url must be configured in `solace_host` variable. Example:
+1. Solace SEMP API url must be configured in `solace_host` variable. 
+2. Add credential properties with either username and password or bearerToken
+Sample of `solace_host` with `username` and `password`:
 ```
 solace_host = {
   url = "https://yoursolaceurl:port"
@@ -21,8 +23,17 @@ solace_host = {
   password = "yourpassword"
 }
 ```
+Sample of `solace_host` with `bearerToken`:
+```
+solace_host = {
+  url = "https://yoursolaceurl:port"
+  username = null
+  password = null
+  bearerToken = "yourbase64bearertoken"
+}
+```
 
-## Configure Solace PubSub+ Resources
+## Configure Solace Resources
 Define Solace resources in variable file; `terraform.tfvars`. Each resource is directly mapped to Solace SEMPv2 API object. The object variable is defined using the following format:
 ```
 <ObjectName> = [
@@ -60,8 +71,8 @@ MsgVpns = [
     }
 ]
 ```
-## Configure ClientProfiles in Solace Cloud Service
-1. Set variable `is_cloud_service` to `true`
+## Configure ClientProfiles in older version of Solace Cloud Service
+1. Set variable `is_old_cloud_service` to `true`
 2. Assign Solace cloud URL, ServiceId, and token in `solace_cloud` variable:
 ```
 solace_cloud = {

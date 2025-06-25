@@ -1,5 +1,5 @@
 resource "solacebroker_msg_vpn_client_profile" "clientProfiles" {
-    for_each = var.is_cloud_service ? {} : {
+    for_each = var.is_old_cloud_service ? {} : {
         for v in var.ClientProfiles : "${v.msgVpnName}.${v.clientProfileName}" => v
     }
 
@@ -17,6 +17,7 @@ resource "solacebroker_msg_vpn_client_profile" "clientProfiles" {
     compression_enabled = each.value.compressionEnabled
     eliding_delay = each.value.elidingDelay
     eliding_enabled = each.value.elidingEnabled
+    max_amqp_link_count = each.value.maxAmqpLinkCount
     max_connection_count_per_client_username = each.value.maxConnectionCountPerClientUsername
     max_egress_flow_count = each.value.maxEgressFlowCount
     max_endpoint_count_per_client_username = each.value.maxEndpointCountPerClientUsername
