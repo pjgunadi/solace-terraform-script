@@ -67,3 +67,31 @@ resource "solacebroker_msg_vpn_authentication_oauth_profile_resource_server_requ
         solacebroker_msg_vpn_authentication_oauth_profile.authenticationOauthProfiles
     ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.AuthenticationOauthProfiles : "${v.msgVpnName}.${v.oauthProfileName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.oauthProfileName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_authentication_oauth_profile.authenticationOauthProfiles[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.AuthOauthProfileClientRequiredClaims : "${v.msgVpnName}.${v.oauthProfileName}.${v.clientRequiredClaimName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.oauthProfileName)}/${urlencode(v.clientRequiredClaimName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_authentication_oauth_profile_client_required_claim.authenticationOauthProfileClientRequiredClaims[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.AuthOauthProfileResourceServerRequiredClaims : "${v.msgVpnName}.${v.oauthProfileName}.${v.resourceServerRequiredClaimName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.oauthProfileName)}/${urlencode(v.resourceServerRequiredClaimName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_authentication_oauth_profile_resource_server_required_claim.authenticationOauthProfileResourceServerRequiredClaims[each.key]
+  id = each.value
+}

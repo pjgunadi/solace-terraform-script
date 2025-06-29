@@ -41,6 +41,8 @@ variable "JndiConnectionFactories" {
         transportSendBufferSize = optional(number)
         transportTcpNoDelayEnabled = optional(bool)
         xaEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -50,6 +52,8 @@ variable "JndiQueues" {
         msgVpnName = string
         queueName = string
         physicalName = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -59,6 +63,8 @@ variable "JndiTopics" {
         msgVpnName = string
         topicName = string
         physicalName = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

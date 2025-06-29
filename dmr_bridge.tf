@@ -11,3 +11,13 @@ resource "solacebroker_msg_vpn_dmr_bridge" "dmrBridges" {
     solacebroker_msg_vpn.msgVpns,
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.DmrBridges : "${v.msgVpnName}.${v.remoteNodeName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.remoteNodeName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_dmr_bridge.dmrBridges[each.key]
+  id = each.value
+}

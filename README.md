@@ -71,6 +71,20 @@ MsgVpns = [
     }
 ]
 ```
+
+## Import Existing Resource into Terraform State
+Existing configuration can be added into Terraform state by adding attribute `_import = true` in object variable. Example:
+```
+MsgVpns = [
+    {
+        msgVpnName ="myvpn2"
+        enabled = true
+        maxConnectionCount = 1000
+        _import = true
+    }
+]
+```
+
 ## Configure ClientProfiles in older version of Solace Cloud Service
 1. Set variable `is_old_cloud_service` to `true`
 2. Assign Solace cloud URL, ServiceId, and token in `solace_cloud` variable:

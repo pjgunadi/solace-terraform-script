@@ -27,6 +27,8 @@ variable "TopicEndpointTemplates" {
         respectMsgPriorityEnabled = optional(bool)
         respectTtlEnabled = optional(bool)
         topicEndpointNameFilter = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

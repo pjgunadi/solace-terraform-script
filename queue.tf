@@ -54,3 +54,22 @@ resource "solacebroker_msg_vpn_queue_subscription" "subscriptions" {
     solacebroker_msg_vpn_queue.queues
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.Queues : "${v.msgVpnName}.${v.queueName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_queue.queues[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.Subscriptions : "${v.msgVpnName}.${v.queueName}.${v.subscriptionTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueName)}/${urlencode(v.subscriptionTopic)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_queue_subscription.subscriptions[each.key]
+  id = each.value
+}

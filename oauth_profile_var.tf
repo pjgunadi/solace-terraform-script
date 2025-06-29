@@ -1,7 +1,7 @@
 variable "OauthProfiles" {
     type = list(object({
         oauthProfileName = string
-        accessLevelGroupsClaimName = string
+        accessLevelGroupsClaimName = optional(string)
         accessLevelGroupsClaimStringFormat = optional(string)
         clientId = optional(string)
         clientRedirectUri = optional(string)
@@ -29,6 +29,7 @@ variable "OauthProfiles" {
         interactivePromptForNewSession = optional(string)
         issuer = optional(string)
         oauthRole = optional(string)
+        proxyName = optional(string)
         resourceServerParseAccessTokenEnabled = optional(bool)
         resourceServerRequiredAudience = optional(string)
         resourceServerRequiredIssuer = optional(string)
@@ -40,7 +41,8 @@ variable "OauthProfiles" {
         resourceServerValidateTypeEnabled = optional(bool)
         sempEnabled = optional(bool)
         usernameClaimName = optional(string)
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -52,7 +54,8 @@ variable "OauthProfileAccessLevelGroups" {
         description = optional(string)
         globalAccessLevel = optional(string)
         msgVpnAccessLevel = optional(string)
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -63,7 +66,8 @@ variable "OauthProfileAccessLevelGroupVpnAccessLevelExceptions" {
         groupName = string
         msgVpnName = string
         accessLevel = optional(string)
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -73,6 +77,8 @@ variable "OauthProfileDefaultVpnAccessLevelExceptions" {
         oauthProfileName = string
         msgVpnName = string
         accessLevel = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -81,7 +87,8 @@ variable "OauthProfileClientAllowedHosts" {
     type = list(object({
         oauthProfileName = string
         allowedHost = string
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -91,7 +98,8 @@ variable "OauthProfileClientAuthorizationParameters" {
         oauthProfileName = string
         authorizationParameterName = string
         authorizationParameterValue = optional(string)
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -101,7 +109,8 @@ variable "OauthProfileClientRequiredClaims" {
         oauthProfileName = string
         clientRequiredClaimName = string
         clientRequiredClaimValue = string
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -111,6 +120,8 @@ variable "OauthProfileResourceServerRequiredClaims" {
         oauthProfileName = string
         resourceServerRequiredClaimName = string
         resourceServerRequiredClaimValue = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

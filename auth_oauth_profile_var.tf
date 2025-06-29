@@ -32,6 +32,8 @@ variable "AuthenticationOauthProfiles" {
         resourceServerValidateScopeEnabled = optional(bool)
         resourceServerValidateTypeEnabled = optional(bool)
         usernameClaimName = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -42,6 +44,8 @@ variable "AuthOauthProfileClientRequiredClaims" {
         oauthProfileName = string
         clientRequiredClaimName = string
         clientRequiredClaimValue = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -52,6 +56,8 @@ variable "AuthOauthProfileResourceServerRequiredClaims" {
         oauthProfileName = string
         resourceServerRequiredClaimName = string
         resourceServerRequiredClaimValue = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

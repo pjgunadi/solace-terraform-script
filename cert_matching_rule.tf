@@ -45,3 +45,31 @@ resource "solacebroker_msg_vpn_cert_matching_rule_condition" "certMatchingRuleCo
         solacebroker_msg_vpn_cert_matching_rule.certMatchingRules
     ]
 }
+
+# Import
+import {
+    for_each = {
+        for v in var.CertMatchingRules : "${v.msgVpnName}.${v.ruleName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.ruleName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_cert_matching_rule.certMatchingRules[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.CertMatchingRuleAttributeFilters : "${v.msgVpnName}.${v.ruleName}.${v.filterName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.ruleName)}/${urlencode(v.filterName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_cert_matching_rule_attribute_filter.certMatchingRuleAttributeFilters[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.CertMatchingRuleConditions : "${v.msgVpnName}.${v.ruleName}.${v.source}" => "${urlencode(v.msgVpnName)}/${urlencode(v.ruleName)}/${urlencode(v.source)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_cert_matching_rule_condition.certMatchingRuleConditions[each.key]
+    id = each.value
+}

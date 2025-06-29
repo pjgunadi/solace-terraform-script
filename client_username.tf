@@ -34,3 +34,22 @@ resource "solacebroker_msg_vpn_client_username_attribute" "clientUsernameAttribu
     solacebroker_msg_vpn_client_username.clientUsernames
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.ClientUsernames : "${v.msgVpnName}.${v.clientUsername}" => "${urlencode(v.msgVpnName)}/${urlencode(v.clientUsername)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_client_username.clientUsernames[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.ClientUsernameAttributes : "${v.msgVpnName}.${v.clientUsername}.${v.attributeName}.${v.attributeValue}" => "${urlencode(v.msgVpnName)}/${urlencode(v.clientUsername)}/${urlencode(v.attributeName)}/${urlencode(v.attributeValue)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_client_username_attribute.clientUsernameAttributes[each.key]
+  id = each.value
+}

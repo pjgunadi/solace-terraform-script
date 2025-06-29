@@ -67,3 +67,13 @@ resource "solacebroker_msg_vpn_client_profile" "clientProfiles" {
       solacebroker_msg_vpn.msgVpns
     ]
 }
+
+# Import
+import {
+  for_each = var.is_old_cloud_service ? {} : {
+    for v in var.ClientProfiles : "${v.msgVpnName}.${v.clientProfileName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.clientProfileName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_client_profile.clientProfiles[each.key]
+  id = each.value
+}

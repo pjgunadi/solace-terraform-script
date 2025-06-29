@@ -28,6 +28,8 @@ variable "QueueTemplates" {
         rejectMsgToSenderOnDiscardBehavior = optional(string)
         respectMsgPriorityEnabled = optional(bool)
         respectTtlEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

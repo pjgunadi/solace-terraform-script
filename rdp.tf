@@ -118,3 +118,58 @@ resource "solacebroker_msg_vpn_rest_delivery_point_rest_consumer_oauth_jwt_claim
     solacebroker_msg_vpn_rest_delivery_point_rest_consumer.rdpRestConsumers
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.RestDeliveryPoints : "${v.msgVpnName}.${v.restDeliveryPointName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.restDeliveryPointName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_rest_delivery_point.restDeliveryPoints[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.RdpQueueBindings : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.queueBindingName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.restDeliveryPointName)}/${urlencode(v.queueBindingName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_rest_delivery_point_queue_binding.rdpQueueBindings[each.key]
+  id = each.value
+}
+  
+import {
+  for_each = {
+    for v in var.RdpQueueBindingProtectedRequestHeaders : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.queueBindingName}.${v.headerName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.restDeliveryPointName)}/${urlencode(v.queueBindingName)}/${urlencode(v.headerName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_rest_delivery_point_queue_binding_protected_request_header.rdpQueueBindingProtectedRequestHeaders[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.RdpQueueBindingRequestHeaders : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.queueBindingName}.${v.headerName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.restDeliveryPointName)}/${urlencode(v.queueBindingName)}/${urlencode(v.headerName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_rest_delivery_point_queue_binding_request_header.rdpQueueBindingRequestHeaders[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+        for v in var.RdpRestConsumers : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.restConsumerName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.restDeliveryPointName)}/${urlencode(v.restConsumerName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_rest_delivery_point_rest_consumer.rdpRestConsumers[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.RdpRestConsumerOauthJwtClaims : "${v.msgVpnName}.${v.restDeliveryPointName}.${v.restConsumerName}.${v.oauthJwtClaimName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.restDeliveryPointName)}/${urlencode(v.restConsumerName)}/${urlencode(v.oauthJwtClaimName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_rest_delivery_point_rest_consumer_oauth_jwt_claim.rdpRestConsumerOauthJwtClaims[each.key]
+  id = each.value
+}

@@ -59,6 +59,8 @@ variable "ClientProfiles" {
         eventSubscriptionCountThreshold = optional(map(number))
         eventTransactedSessionCountThreshold = optional(map(number))
         eventTransactionCountThreshold = optional(map(number))
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

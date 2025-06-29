@@ -32,6 +32,7 @@ resource "solacebroker_oauth_profile" "oauthProfiles" {
     interactive_prompt_for_new_session = each.value.interactivePromptForNewSession
     issuer = each.value.issuer
     oauth_role = each.value.oauthRole
+    proxy_name = each.value.proxyName
     resource_server_parse_access_token_enabled = each.value.resourceServerParseAccessTokenEnabled
     resource_server_required_audience = each.value.resourceServerRequiredAudience
     resource_server_required_issuer = each.value.resourceServerRequiredIssuer
@@ -93,7 +94,7 @@ resource "solacebroker_oauth_profile_default_msg_vpn_access_level_exception" "oa
 
 resource "solacebroker_oauth_profile_client_allowed_host" "oauthProfileClientAllowedHosts" {
     for_each = {
-        for v in var.OauthProfileClientAllowedHosts : "${v.msgVpnName}.${v.allowedHost}" => v
+        for v in var.OauthProfileClientAllowedHosts : "${v.oauthProfileName}.${v.allowedHost}" => v
     }
     
     oauth_profile_name = each.value.oauthProfileName
@@ -106,7 +107,7 @@ resource "solacebroker_oauth_profile_client_allowed_host" "oauthProfileClientAll
 
 resource "solacebroker_oauth_profile_client_authorization_parameter" "oauthProfileClientAuthorizationParameters" {
     for_each = {
-        for v in var.OauthProfileClientAuthorizationParameters : "${v.msgVpnName}.${v.authorizationParameterName}" => v
+        for v in var.OauthProfileClientAuthorizationParameters : "${v.oauthProfileName}.${v.authorizationParameterName}" => v
     }
     
     oauth_profile_name = each.value.oauthProfileName
@@ -120,7 +121,7 @@ resource "solacebroker_oauth_profile_client_authorization_parameter" "oauthProfi
 
 resource "solacebroker_oauth_profile_client_required_claim" "oauthProfileClientRequiredClaims" {
     for_each = {
-        for v in var.OauthProfileClientRequiredClaims : "${v.msgVpnName}.${v.clientRequiredClaimName}" => v
+        for v in var.OauthProfileClientRequiredClaims : "${v.oauthProfileName}.${v.clientRequiredClaimName}" => v
     }
     
     oauth_profile_name = each.value.oauthProfileName
@@ -134,7 +135,7 @@ resource "solacebroker_oauth_profile_client_required_claim" "oauthProfileClientR
 
 resource "solacebroker_oauth_profile_resource_server_required_claim" "oauthProfileResourceServerRequiredClaims" {
     for_each = {
-        for v in var.OauthProfileResourceServerRequiredClaims : "${v.msgVpnName}.${v.resourceServerRequiredClaimName}" => v
+        for v in var.OauthProfileResourceServerRequiredClaims : "${v.oauthProfileName}.${v.resourceServerRequiredClaimName}" => v
     }
     
     oauth_profile_name = each.value.oauthProfileName
@@ -145,3 +146,77 @@ resource "solacebroker_oauth_profile_resource_server_required_claim" "oauthProfi
         solacebroker_oauth_profile.oauthProfiles
     ]
 }
+
+# Import
+import {
+    for_each = {
+        for v in var.OauthProfiles : "${v.oauthProfileName}" => "${urlencode(v.oauthProfileName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile.oauthProfiles[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileAccessLevelGroups : "${v.oauthProfileName}.${v.groupName}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.groupName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_access_level_group.oauthProfileAccessLevelGroups[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileAccessLevelGroupVpnAccessLevelExceptions : "${v.oauthProfileName}.${v.groupName}.${v.msgVpnName}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.groupName)}/${urlencode(v.msgVpnName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_access_level_group_msg_vpn_access_level_exception.oauthProfileAccessLevelGroupVpnAccessLevelExceptions[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileDefaultVpnAccessLevelExceptions : "${v.oauthProfileName}.${v.msgVpnName}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.msgVpnName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_default_msg_vpn_access_level_exception.oauthProfileDefaultVpnAccessLevelExceptions[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileClientAllowedHosts : "${v.oauthProfileName}.${v.allowedHost}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.allowedHost)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_client_allowed_host.oauthProfileClientAllowedHosts[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileClientAuthorizationParameters : "${v.oauthProfileName}.${v.authorizationParameterName}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.authorizationParameterName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_client_authorization_parameter.oauthProfileClientAuthorizationParameters[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileClientRequiredClaims : "${v.oauthProfileName}.${v.clientRequiredClaimName}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.clientRequiredClaimName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_client_required_claim.oauthProfileClientRequiredClaims[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.OauthProfileResourceServerRequiredClaims : "${v.oauthProfileName}.${v.resourceServerRequiredClaimName}" => "${urlencode(v.oauthProfileName)}/${urlencode(v.resourceServerRequiredClaimName)}" if v._import==true
+    }
+
+    to = solacebroker_oauth_profile_resource_server_required_claim.oauthProfileResourceServerRequiredClaims[each.key]
+    id = each.value
+}
+    

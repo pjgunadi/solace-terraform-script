@@ -20,6 +20,8 @@ variable "MqttSessions" {
         queueRejectLowPriorityMsgLimit = optional(number)
         queueRejectMsgToSenderOnDiscardBehavior = optional(string)
         queueRespectTtlEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -31,6 +33,8 @@ variable "MqttSessionSubscriptions" {
         mqttSessionVirtualRouter = string
         subscriptionTopic = string
         subscriptionQos = optional(number)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

@@ -123,3 +123,13 @@ resource "solacebroker_msg_vpn" "msgVpns" {
   event_transacted_session_count_threshold = each.value.eventTransactedSessionCountThreshold
   event_transaction_count_threshold = each.value.eventTransactionCountThreshold
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.MsgVpns : "${v.msgVpnName}" => "${urlencode(v.msgVpnName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn.msgVpns[each.key]
+  id = each.value
+}

@@ -12,3 +12,13 @@ resource "solacebroker_msg_vpn_mqtt_retain_cache" "mqttRetainCaches" {
     solacebroker_msg_vpn.msgVpns
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.MqttRetainCaches : "${v.msgVpnName}.${v.cacheName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_mqtt_retain_cache.mqttRetainCaches[each.key]
+  id = each.value
+}

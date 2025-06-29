@@ -11,3 +11,13 @@ resource "solacebroker_msg_vpn_authentication_kerberos_realm" "authenticationKer
     solacebroker_msg_vpn.msgVpns
   ]
 }
+
+# Import
+import {
+  for_each = {
+        for v in var.AuthenticationKerberosRealms : "${v.msgVpnName}.${v.kerberosRealmName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.kerberosRealmName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_authentication_kerberos_realm.authenticationKerberosRealm[each.key]
+  id = each.value
+}

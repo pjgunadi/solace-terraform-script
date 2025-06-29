@@ -17,3 +17,13 @@ resource "solacebroker_msg_vpn_authorization_group" "authorizationGroups" {
     solacebroker_msg_vpn_client_profile.clientProfiles
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.AuthorizationGroups : "${v.msgVpnName}.${v.authorizationGroupName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.authorizationGroupName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_authorization_group.authorizationGroups[each.key]
+  id = each.value
+}

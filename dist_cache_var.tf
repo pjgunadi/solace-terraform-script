@@ -8,6 +8,8 @@ variable "DistributedCaches" {
         heartbeat = optional(number)
         scheduledDeleteMsgDayList = optional(string)
         scheduledDeleteMsgTimeList = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -36,7 +38,8 @@ variable "DistributedCacheClusters" {
         eventRequestQueueDepthThreshold = optional(map(number))
         eventRequestRateThreshold = optional(map(number))
         eventResponseRateThreshold = optional(map(number))
-
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -47,6 +50,8 @@ variable "GlobalCachingHomeClusters" {
         cacheName = string
         clusterName = string
         homeClusterName = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -58,6 +63,8 @@ variable "GlobalCachingHomeClusterTopicPrefixes" {
         clusterName = string
         homeClusterName = string
         topicPrefix = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -71,6 +78,8 @@ variable "DistributedCacheClusterInstances" {
         autoStartEnabled = optional(bool)
         enabled = optional(bool)
         stopOnLostMsgEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -81,6 +90,8 @@ variable "DistributedCacheClusterTopics" {
         cacheName = string
         clusterName = string
         topic = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

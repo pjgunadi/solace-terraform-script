@@ -6,6 +6,8 @@ variable "AclProfiles" {
         publishTopicDefaultAction = optional(string)
         subscribeTopicDefaultAction = optional(string)
         subscribeShareNameDefaultAction = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -14,6 +16,8 @@ variable "ClientConnectExceptions" {
         aclProfileName = string
         clientConnectExceptionAddress = string
         msgVpnName = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -24,6 +28,8 @@ variable "PublishTopicExceptions" {
         msgVpnName = string
         publishTopicException = string
         publishTopicExceptionSyntax = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -34,6 +40,8 @@ variable "SubscribeTopicExceptions" {
         msgVpnName = string
         subscribeTopicException = string
         subscribeTopicExceptionSyntax = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -44,6 +52,8 @@ variable "SubscribeShareNameExceptions" {
         msgVpnName = string
         subscribeShareNameException = string
         subscribeShareNameExceptionSyntax = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

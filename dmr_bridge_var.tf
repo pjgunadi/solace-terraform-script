@@ -3,7 +3,8 @@ variable "DmrBridges" {
         msgVpnName = string
         remoteNodeName = string
         remoteMsgVpnName = optional(string)
-
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

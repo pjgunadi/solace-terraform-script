@@ -25,7 +25,7 @@ resource "solacebroker_msg_vpn_bridge" "bridges" {
 
 resource "solacebroker_msg_vpn_bridge_remote_msg_vpn" "remoteMsgVpns" {
   for_each = {
-    for v in var.RemoteMsgVpns : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteMsgVpnName}.${v.remoteMsgVpnLocation}" => v
+    for v in var.RemoteMsgVpns : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteMsgVpnName}.${v.remoteMsgVpnLocation}.${v.remoteMsgVpnInterface}" => v
   }
   
     bridge_name = each.value.bridgeName
@@ -63,4 +63,32 @@ resource "solacebroker_msg_vpn_bridge_remote_subscription" "remoteSubscriptions"
   depends_on = [
     solacebroker_msg_vpn_bridge.bridges
   ]
+}
+
+# Import
+import {
+  for_each = {
+    for v in var.Bridges : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}" => "${urlencode(v.msgVpnName)}/${urlencode(v.bridgeName)}/${urlencode(v.bridgeVirtualRouter)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_bridge.bridges[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.RemoteMsgVpns : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteMsgVpnName}.${v.remoteMsgVpnLocation}.${v.remoteMsgVpnInterface}" => "${urlencode(v.msgVpnName)}/${urlencode(v.bridgeName)}/${urlencode(v.bridgeVirtualRouter)}/${urlencode(v.remoteMsgVpnName)}/${urlencode(v.remoteMsgVpnLocation)}/${urlencode(v.remoteMsgVpnInterface)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_bridge_remote_msg_vpn.remoteMsgVpns[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.RemoteSubscriptions : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteSubscriptionTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.bridgeName)}/${urlencode(v.bridgeVirtualRouter)}/${urlencode(v.remoteSubscriptionTopic)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_bridge_remote_subscription.remoteSubscriptions[each.key]
+  id = each.value
 }

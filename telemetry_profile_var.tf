@@ -18,7 +18,8 @@ variable "TelemetryProfiles" {
         receiverTcpMaxWindowSize = optional(number)
         traceEnabled = optional(bool)
         traceSendSpanGenerationEnabled = optional(bool)
-
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -28,6 +29,8 @@ variable "TelemetryProfileReceiverAclConnectExceptions" {
         msgVpnName = string
         telemetryProfileName = string
         receiverAclConnectExceptionAddres = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -38,6 +41,8 @@ variable "TelemetryProfileTraceFilters" {
         telemetryProfileName = string
         traceFilterName = string
         enabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -49,6 +54,8 @@ variable "TelemetryProfileTraceFilterSubscriptions" {
         traceFilterName = string
         subscription = string
         subscriptionSyntax = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

@@ -9,6 +9,8 @@ variable "ClientCertAuthorities" {
         ocspOverrideUrl = optional(string)
         ocspTimeout = optional(number)
         revocationCheckEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -17,6 +19,8 @@ variable "OcspTlsTrustedCommonNames" {
     type = list(object({
         certAuthorityName = string
         ocspTlsTrustedCommonName = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

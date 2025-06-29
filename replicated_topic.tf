@@ -11,3 +11,13 @@ resource "solacebroker_msg_vpn_replicated_topic" "replicatedTopics" {
     solacebroker_msg_vpn.msgVpns
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.ReplicatedTopics : "${v.msgVpnName}.${v.replicatedTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.replicatedTopic)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_replicated_topic.replicatedTopics[each.key]
+  id = each.value
+}

@@ -3,6 +3,8 @@ variable "CertMatchingRules" {
         msgVpnName = string
         ruleName = string
         enabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -14,7 +16,8 @@ variable "CertMatchingRuleAttributeFilters" {
         ruleName = string
         attributeName = optional(string)
         attributeValue = optional(string)
- 
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -26,7 +29,8 @@ variable "CertMatchingRuleConditions" {
         source = string
         attribute = optional(string)
         expression = optional(string)
- 
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

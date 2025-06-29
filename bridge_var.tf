@@ -14,6 +14,8 @@ variable "Bridges" {
         remoteConnectionRetryDelay = optional(number)
         remoteDeliverToOnePriority = optional(string)
         tlsCipherSuiteList = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -35,7 +37,8 @@ variable "RemoteMsgVpns" {
         queueBinding = optional(string)
         tlsEnabled = optional(bool)
         unidirectionalClientProfile = optional(string)
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -47,7 +50,8 @@ variable "RemoteSubscriptions" {
         msgVpnName = string
         remoteSubscriptionTopic = string
         deliverAlwaysEnabled = optional(bool)
-
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

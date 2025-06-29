@@ -7,6 +7,8 @@ variable "RestDeliveryPoints" {
         enabled = optional(bool)
         service = optional(string)
         vendor = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -19,6 +21,8 @@ variable "RdpQueueBindings" {
         gatewayReplaceTargetAuthorityEnabled = optional(bool)
         postRequestTarget = optional(string)
         requestTargetEvaluation = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -30,6 +34,8 @@ variable "RdpQueueBindingProtectedRequestHeaders" {
         queueBindingName = string
         headerName = string
         headerValue = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -41,6 +47,8 @@ variable "RdpQueueBindingRequestHeaders" {
         queueBindingName = string
         headerName = string
         headerValue = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -80,6 +88,8 @@ variable "RdpRestConsumers" {
         retryDelay = optional(number)
         tlsCipherSuiteList = optional(string)
         tlsEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -91,6 +101,8 @@ variable "RdpRestConsumerOauthJwtClaims" {
         restConsumerName = string
         oauthJwtClaimName = string
         oauthJwtClaimValue = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

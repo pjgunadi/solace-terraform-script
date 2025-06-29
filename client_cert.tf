@@ -23,3 +23,23 @@ resource "solacebroker_client_cert_authority_ocsp_tls_trusted_common_name" "ocsp
     solacebroker_client_cert_authority.clientCertAuthorities
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.ClientCertAuthorities : "${v.certAuthorityName}" => "${urlencode(v.certAuthorityName)}" if v._import==true
+  }
+
+  to = solacebroker_client_cert_authority.clientCertAuthorities[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.OcspTlsTrustedCommonNames : "${v.certAuthorityName}.${v.ocspTlsTrustedCommonNames}" => "${urlencode(v.certAuthorityName)}/${urlencode(v.ocspTlsTrustedCommonNames)}" if v._import==true
+  }
+
+  to = solacebroker_client_cert_authority_ocsp_tls_trusted_common_name.ocspTlsTrustedCommonNames[each.key]
+  id = each.value
+}
+  

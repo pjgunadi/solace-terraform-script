@@ -8,6 +8,8 @@ variable "ClientUsernames" {
         guaranteedEndpointPermissionOverrideEnabled = optional(bool)
         password = optional(string)
         subscriptionManagerEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -18,6 +20,8 @@ variable "ClientUsernameAttributes" {
         msgVpnName = string
         attributeName = string
         attributeValue = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

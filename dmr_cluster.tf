@@ -138,3 +138,67 @@ resource "solacebroker_dmr_cluster_link_remote_address" "dmrClusterLinkRemoteAdd
         solacebroker_dmr_cluster_link.dmrClusterLinks
     ]
 }
+
+# Import
+import {
+    for_each = {
+        for v in var.DmrClusters : "${v.dmrClusterName}" => "${urlencode(v.dmrClusterName)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster.dmrClusters[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.DmrClusterCertMatchingRules : "${v.dmrClusterName}.${v.ruleName}" => "${urlencode(v.dmrClusterName)}/${urlencode(v.ruleName)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster_cert_matching_rule.dmrClusterCertMatchingRules[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.DmrClusterCertMatchingRuleAttributeFilters : "${v.dmrClusterName}.${v.ruleName}.${v.filterName}" => "${urlencode(v.dmrClusterName)}/${urlencode(v.ruleName)}/${urlencode(v.filterName)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster_cert_matching_rule_attribute_filter.dmrClusterCertMatchingRuleAttributeFilters[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.DmrClusterCertMatchingRuleConditions : "${v.dmrClusterName}.${v.ruleName}.${v.source}" => "${urlencode(v.dmrClusterName)}/${urlencode(v.ruleName)}/${urlencode(v.source)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster_cert_matching_rule_condition.dmrClusterCertMatchingRuleConditions[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.DmrClusterLinks : "${v.dmrClusterName}.${v.remoteNodeName}" => "${urlencode(v.dmrClusterName)}/${urlencode(v.remoteNodeName)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster_link.dmrClusterLinks[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.DmrClusterLinkAttributes : "${v.dmrClusterName}.${v.remoteNodeName}.${v.attributeName}.${v.attributeValue}" => "${urlencode(v.dmrClusterName)}/${urlencode(v.remoteNodeName)}/${urlencode(v.attributeName)}/${urlencode(v.attributeValue)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster_link_attribute.dmrClusterLinkAttributes[each.key]
+    id = each.value
+}
+    
+import {
+    for_each = {
+        for v in var.DmrClusterLinkRemoteAddresses : "${v.dmrClusterName}.${v.remoteNodeName}.${v.remoteAddress}" => "${urlencode(v.dmrClusterName)}/${urlencode(v.remoteNodeName)}/${urlencode(v.remoteAddress)}" if v._import==true
+    }
+
+    to = solacebroker_dmr_cluster_link_remote_address.dmrClusterLinkRemoteAddresses[each.key]
+    id = each.value
+}

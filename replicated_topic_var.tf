@@ -3,7 +3,8 @@ variable "ReplicatedTopics" {
         msgVpnName = string
         replicatedTopic = string
         replicationMode = optional(string)
-
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

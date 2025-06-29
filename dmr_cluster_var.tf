@@ -12,6 +12,8 @@ variable "DmrClusters" {
         tlsServerCertMaxChainDepth = optional(number)
         tlsServerCertValidateDateEnabled = optional(bool)
         tlsServerCertValidateNameEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -21,6 +23,8 @@ variable "DmrClusterCertMatchingRules" {
         dmrClusterName = string
         ruleName = string
         enabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -32,7 +36,8 @@ variable "DmrClusterCertMatchingRuleAttributeFilters" {
         ruleName = string
         attributeName = optional(string)
         attributeValue = optional(string)
- 
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -44,7 +49,8 @@ variable "DmrClusterCertMatchingRuleConditions" {
         source = string
         attribute = optional(string)
         expression = optional(string)
- 
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -85,6 +91,8 @@ variable "DmrClusterLinks" {
         span = optional(string)
         transportCompressedEnabled = optional(bool)
         transportTlsEnabled = optional(bool)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -95,6 +103,8 @@ variable "DmrClusterLinkAttributes" {
         remoteNodeName = string
         attributeName = string
         attributeValue = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -104,6 +114,8 @@ variable "DmrClusterLinkRemoteAddresses" {
         dmrClusterName = string
         remoteNodeName = string
         remoteAddress = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

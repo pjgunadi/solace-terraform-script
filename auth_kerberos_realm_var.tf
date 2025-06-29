@@ -4,6 +4,8 @@ variable "AuthenticationKerberosRealms" {
         kerberosRealmName = string
         enabled = optional(bool)
         kdcAddress = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

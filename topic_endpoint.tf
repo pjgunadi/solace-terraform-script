@@ -38,3 +38,13 @@ resource "solacebroker_msg_vpn_topic_endpoint" "topicEndpoints" {
         solacebroker_msg_vpn.msgVpns
     ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.TopicEndpoints : "${v.msgVpnName}.${v.topicEndpointName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.topicEndpointName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_topic_endpoint.topicEndpoints[each.key]
+  id = each.value
+}

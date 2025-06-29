@@ -28,3 +28,22 @@ resource "solacebroker_msg_vpn_replay_log_topic_filter_subscription" "replayLogT
     solacebroker_msg_vpn_replay_log.replayLogs
   ]
 }
+
+# Import
+import {
+  for_each = {
+    for v in var.ReplayLogs : "${v.msgVpnName}.${v.replayLogName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.replayLogName)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_replay_log.replayLogs[each.key]
+  id = each.value
+}
+
+import {
+  for_each = {
+    for v in var.ReplayLogTopicFilterSubscriptions : "${v.msgVpnName}.${v.replayLogName}.${v.topicFilterSubscription}" => "${urlencode(v.msgVpnName)}/${urlencode(v.replayLogName)}/${urlencode(v.topicFilterSubscription)}" if v._import==true
+  }
+
+  to = solacebroker_msg_vpn_replay_log_topic_filter_subscription.replayLogTopicFilterSubscriptions[each.key]
+  id = each.value
+}

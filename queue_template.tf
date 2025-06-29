@@ -36,3 +36,13 @@ resource "solacebroker_msg_vpn_queue_template" "queueTemplates" {
         solacebroker_msg_vpn.msgVpns
     ]
 }
+
+# Import
+import {
+    for_each = {
+        for v in var.QueueTemplates : "${v.msgVpnName}.${v.queueTemplateName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueTemplateName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_queue_template.queueTemplates[each.key]
+    id = each.value
+}

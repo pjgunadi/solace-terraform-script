@@ -49,7 +49,8 @@ variable "CloudClientProfiles" {
         tlsAllowDowngradeToPlainTextEnabled = optional(bool)
         #Thresholds
         eventClientProvisionedEndpointSpoolUsageThreshold = optional(map(number))
-        
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

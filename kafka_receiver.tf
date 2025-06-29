@@ -5,10 +5,20 @@ resource "solacebroker_msg_vpn_kafka_receiver" "kafkaReceivers" {
 
     msg_vpn_name = each.value.msgVpnName
     kafka_receiver_name = each.value.kafkaReceiverName
+    authentication_aws_msk_iam_access_key_id = each.value.authenticationAwsMskIamAccessKeyId
+    authentication_aws_msk_iam_region = each.value.authenticationAwsMskIamRegion
+    authentication_aws_msk_iam_secret_access_key = each.value.authenticationAwsMskIamSecretAccessKey
+    authentication_aws_msk_iam_sts_external_id = each.value.authenticationAwsMskIamStsExternalId
+    authentication_aws_msk_iam_sts_role_arn = each.value.authenticationAwsMskIamStsRoleArn
+    authentication_aws_msk_iam_sts_role_session_name = each.value.authenticationAwsMskIamStsRoleSessionName
     authentication_basic_password = each.value.authenticationBasicPassword
     authentication_basic_username = each.value.authenticationBasicUsername
     authentication_client_cert_content = each.value.authenticationClientCertContent
     authentication_client_cert_password = each.value.authenticationClientCertPassword
+    authentication_kerberos_keytab_content = each.value.authenticationKerberosKeytabContent
+    authentication_kerberos_keytab_file_name = each.value.authenticationKerberosKeytabFileName
+    authentication_kerberos_service_name = each.value.authenticationKerberosServiceName
+    authentication_kerberos_user_principal_name = each.value.authenticationKerberosUserPrincipalName
     authentication_oauth_client_id = each.value.authenticationOauthClientId
     authentication_oauth_client_scope = each.value.authenticationOauthClientScope
     authentication_oauth_client_secret = each.value.authenticationOauthClientSecret
@@ -51,4 +61,23 @@ resource "solacebroker_msg_vpn_kafka_receiver_topic_binding" "kafkaReceiverTopic
     depends_on = [ 
         solacebroker_msg_vpn_kafka_receiver.kafkaReceivers
     ]
+}
+
+# Import
+import {
+    for_each = {
+        for v in var.KafkaReceivers : "${v.msgVpnName}.${v.kafkaReceiverName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.kafkaReceiverName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_kafka_receiver.kafkaReceivers[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.KafkaReceiverTopicBindings : "${v.msgVpnName}.${v.kafkaReceiverName}.${v.topicName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.kafkaReceiverName)}/${urlencode(v.topicName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_kafka_receiver_topic_binding.kafkaReceiverTopicBindings[each.key]
+    id = each.value
 }

@@ -4,6 +4,8 @@ variable "MqttRetainCaches" {
         cacheName = string
         enabled = optional(bool)
         msgLifetime = optional(number)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

@@ -7,6 +7,8 @@ variable "AuthorizationGroups" {
         enabled = optional(bool)
         orderAfterAuthorizationGroupName = optional(string)
         orderBeforeAuthorizationGroupName = optional(string)
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }

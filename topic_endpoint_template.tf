@@ -34,3 +34,13 @@ resource "solacebroker_msg_vpn_topic_endpoint_template" "topicEndpointTemplates"
         solacebroker_msg_vpn.msgVpns
     ]
 }
+
+# Import
+import {
+    for_each = {
+        for v in var.TopicEndpointTemplates : "${v.msgVpnName}.${v.topicEndpointTemplateName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.topicEndpointTemplateName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_topic_endpoint_template.topicEndpointTemplates[each.key]
+    id = each.value
+}

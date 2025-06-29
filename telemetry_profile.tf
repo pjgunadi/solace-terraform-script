@@ -71,3 +71,40 @@ resource "solacebroker_msg_vpn_telemetry_profile_trace_filter_subscription" "tel
         solacebroker_msg_vpn_telemetry_profile_trace_filter.telemetryProfileTraceFilters
     ]
 }
+
+# Import
+import {
+    for_each = {
+        for v in var.TelemetryProfiles : "${v.msgVpnName}.${v.telemetryProfileName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_telemetry_profile.telemetryProfiles[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.TelemetryProfileReceiverAclConnectExceptions : "${v.msgVpnName}.${v.telemetryProfileName}.${v.receiverAclConnectExceptionAddress}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}/${urlencode(v.receiverAclConnectExceptionAddress)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_telemetry_profile_receiver_acl_connect_exception.telemetryProfileReceiverAclConnectExceptions[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.TelemetryProfileTraceFilters : "${v.msgVpnName}.${v.telemetryProfileName}.${v.traceFilterName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}/${urlencode(v.traceFilterName)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_telemetry_profile_trace_filter.telemetryProfileTraceFilters[each.key]
+    id = each.value
+}
+
+import {
+    for_each = {
+        for v in var.TelemetryProfileTraceFilterSubscriptions : "${v.msgVpnName}.${v.telemetryProfileName}.${v.traceFilterName}.${v.subscription}.${v.subscriptionSyntax}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}/${urlencode(v.traceFilterName)}/${urlencode(v.subscription)}/${urlencode(v.subscriptionSyntax)}" if v._import==true
+    }
+
+    to = solacebroker_msg_vpn_telemetry_profile_trace_filter_subscription.telemetryProfileTraceFilterSubscriptions[each.key]
+    id = each.value
+}

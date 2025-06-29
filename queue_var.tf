@@ -34,6 +34,8 @@ variable "Queues" {
         eventBindCountThreshold = optional(map(number))
         eventMsgSpoolUsageThreshold = optional(map(number))
         eventRejectLowPriorityMsgLimitThreshold = optional(map(number))
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
@@ -43,6 +45,8 @@ variable "Subscriptions" {
         subscriptionTopic = string
         queueName = string
         msgVpnName = string
+        #Import Flag 
+        _import = optional(bool)
     }))
     default = []
 }
