@@ -1,0 +1,135 @@
+resource "solacebrokerappliance_msg_vpn" "msgVpns" {
+  for_each = {
+    for v in var.MsgVpns : "${v.msgVpnName}" => v
+  }
+
+  msg_vpn_name = each.value.msgVpnName
+  alias = each.value.alias
+  authentication_basic_enabled = each.value.authenticationBasicEnabled
+  authentication_basic_profile_name = each.value.authenticationBasicProfileName
+  authentication_basic_radius_domain = each.value.authenticationBasicRadiusDomain
+  authentication_basic_type = each.value.authenticationBasicType
+  authentication_client_cert_allow_api_provided_username_enabled = each.value.authenticationClientCertAllowApiProvidedUsernameEnabled
+  authentication_client_cert_certificate_matching_rules_enabled = each.value.authenticationClientCertCertificateMatchingRulesEnabled
+  authentication_client_cert_enabled = each.value.authenticationClientCertEnabled
+  authentication_client_cert_max_chain_depth = each.value.authenticationClientCertMaxChainDepth
+  authentication_client_cert_revocation_check_mode = each.value.authenticationClientCertRevocationCheckMode
+  authentication_client_cert_username_source = each.value.authenticationClientCertUsernameSource
+  authentication_client_cert_validate_date_enabled = each.value.authenticationClientCertValidateDateEnabled
+  authentication_kerberos_allow_api_provided_username_enabled = each.value.authenticationKerberosAllowApiProvidedUsernameEnabled
+  authentication_kerberos_enabled = each.value.authenticationKerberosEnabled
+  authentication_oauth_default_profile_name = each.value.authenticationOauthDefaultProfileName
+  authentication_oauth_enabled = each.value.authenticationOauthEnabled
+  authorization_ldap_group_membership_attribute_name = each.value.authorizationLdapGroupMembershipAttributeName
+  authorization_ldap_trim_client_username_domain_enabled = each.value.authorizationLdapTrimClientUsernameDomainEnabled
+  authorization_profile_name = each.value.authorizationProfileName
+  authorization_type = each.value.authorizationType
+  bridging_tls_server_cert_max_chain_depth = each.value.bridgingTlsServerCertMaxChainDepth
+  bridging_tls_server_cert_validate_date_enabled = each.value.bridgingTlsServerCertValidateDateEnabled
+  bridging_tls_server_cert_validate_name_enabled = each.value.bridgingTlsServerCertValidateNameEnabled
+  dmr_enabled = each.value.dmrEnabled
+  enabled = each.value.enabled
+  event_large_msg_threshold = each.value.eventLargeMsgThreshold
+  event_log_tag = each.value.eventLogTag
+  event_publish_client_enabled = each.value.eventPublishClientEnabled
+  event_publish_msg_vpn_enabled = each.value.eventPublishMsgVpnEnabled
+  event_publish_subscription_mode = each.value.eventPublishSubscriptionMode
+  event_publish_topic_format_mqtt_enabled = each.value.eventPublishTopicFormatMqttEnabled
+  event_publish_topic_format_smf_enabled = each.value.eventPublishTopicFormatSmfEnabled
+  export_subscriptions_enabled = each.value.exportSubscriptionsEnabled
+  jndi_enabled = each.value.jndiEnabled
+  max_connection_count = each.value.maxConnectionCount
+  max_egress_flow_count = each.value.maxEgressFlowCount
+  max_endpoint_count = each.value.maxEndpointCount
+  max_ingress_flow_count = each.value.maxIngressFlowCount
+  # max_kafka_broker_connection_count = each.value.maxKafkaBrokerConnectionCount
+  max_msg_spool_usage = each.value.maxMsgSpoolUsage
+  max_subscription_count = each.value.maxSubscriptionCount
+  max_transacted_session_count = each.value.maxTransactedSessionCount
+  max_transaction_count = each.value.maxTransactionCount
+  mqtt_retain_max_memory = each.value.mqttRetainMaxMemory
+  replication_ack_propagation_interval_msg_count = each.value.replicationAckPropagationIntervalMsgCount
+  replication_bridge_authentication_basic_client_username = each.value.replicationBridgeAuthenticationBasicClientUsername
+  replication_bridge_authentication_basic_password = each.value.replicationBridgeAuthenticationBasicPassword
+  replication_bridge_authentication_client_cert_content = each.value.replicationBridgeAuthenticationClientCertContent
+  replication_bridge_authentication_client_cert_password = each.value.replicationBridgeAuthenticationClientCertPassword
+  replication_bridge_authentication_scheme = each.value.replicationBridgeAuthenticationScheme
+  replication_bridge_compressed_data_enabled = each.value.replicationBridgeCompressedDataEnabled
+  replication_bridge_egress_flow_window_size = each.value.replicationBridgeEgressFlowWindowSize
+  replication_bridge_retry_delay = each.value.replicationBridgeRetryDelay
+  replication_bridge_tls_enabled = each.value.replicationBridgeTlsEnabled
+  replication_bridge_unidirectional_client_profile_name = each.value.replicationBridgeUnidirectionalClientProfileName
+  replication_enabled = each.value.replicationEnabled
+  replication_enabled_queue_behavior = each.value.replicationEnabledQueueBehavior
+  replication_queue_max_msg_spool_usage = each.value.replicationQueueMaxMsgSpoolUsage
+  replication_queue_reject_msg_to_sender_on_discard_enabled = each.value.replicationQueueRejectMsgToSenderOnDiscardEnabled
+  replication_reject_msg_when_sync_ineligible_enabled = each.value.replicationRejectMsgWhenSyncIneligibleEnabled
+  replication_role = each.value.replicationRole
+  replication_transaction_mode = each.value.replicationTransactionMode
+  rest_tls_server_cert_max_chain_depth = each.value.restTlsServerCertMaxChainDepth
+  rest_tls_server_cert_validate_date_enabled = each.value.restTlsServerCertValidateDateEnabled
+  rest_tls_server_cert_validate_name_enabled = each.value.restTlsServerCertValidateNameEnabled
+  semp_over_msg_bus_admin_client_enabled = each.value.sempOverMsgBusAdminClientEnabled
+  semp_over_msg_bus_admin_distributed_cache_enabled = each.value.sempOverMsgBusAdminDistributedCacheEnabled
+  semp_over_msg_bus_admin_enabled = each.value.sempOverMsgBusAdminEnabled
+  semp_over_msg_bus_enabled = each.value.sempOverMsgBusEnabled
+  semp_over_msg_bus_show_enabled = each.value.sempOverMsgBusShowEnabled
+  service_amqp_max_connection_count = each.value.serviceAmqpMaxConnectionCount
+  service_amqp_plain_text_enabled = each.value.serviceAmqpPlainTextEnabled
+  service_amqp_plain_text_listen_port = each.value.serviceAmqpPlainTextListenPort
+  service_amqp_tls_enabled = each.value.serviceAmqpTlsEnabled
+  service_amqp_tls_listen_port = each.value.serviceAmqpTlsListenPort
+  service_mqtt_authentication_client_cert_request = each.value.serviceMqttAuthenticationClientCertRequest
+  service_mqtt_max_connection_count = each.value.serviceMqttMaxConnectionCount
+  service_mqtt_plain_text_enabled = each.value.serviceMqttPlainTextEnabled
+  service_mqtt_plain_text_listen_port = each.value.serviceMqttPlainTextListenPort
+  service_mqtt_tls_enabled = each.value.serviceMqttTlsEnabled
+  service_mqtt_tls_listen_port = each.value.serviceMqttTlsListenPort
+  service_mqtt_tls_web_socket_enabled = each.value.serviceMqttTlsWebSocketEnabled
+  service_mqtt_tls_web_socket_listen_port = each.value.serviceMqttTlsWebSocketListenPort
+  service_mqtt_web_socket_enabled = each.value.serviceMqttWebSocketEnabled
+  service_mqtt_web_socket_listen_port = each.value.serviceMqttWebSocketListenPort
+  service_rest_incoming_authentication_client_cert_request = each.value.serviceRestIncomingAuthenticationClientCertRequest
+  service_rest_incoming_authorization_header_handling = each.value.serviceRestIncomingAuthorizationHeaderHandling
+  service_rest_incoming_max_connection_count = each.value.serviceRestIncomingMaxConnectionCount
+  service_rest_incoming_plain_text_enabled = each.value.serviceRestIncomingPlainTextEnabled
+  service_rest_incoming_plain_text_listen_port = each.value.serviceRestIncomingPlainTextListenPort
+  service_rest_incoming_tls_enabled = each.value.serviceRestIncomingTlsEnabled
+  service_rest_incoming_tls_listen_port = each.value.serviceRestIncomingTlsListenPort
+  service_rest_mode = each.value.serviceRestMode
+  service_rest_outgoing_max_connection_count = each.value.serviceRestOutgoingMaxConnectionCount
+  service_smf_max_connection_count = each.value.serviceSmfMaxConnectionCount
+  service_smf_plain_text_enabled = each.value.serviceSmfPlainTextEnabled
+  service_smf_tls_enabled = each.value.serviceSmfTlsEnabled
+  service_web_authentication_client_cert_request = each.value.serviceWebAuthenticationClientCertRequest
+  service_web_max_connection_count = each.value.serviceWebMaxConnectionCount
+  service_web_plain_text_enabled = each.value.serviceWebPlainTextEnabled
+  service_web_tls_enabled = each.value.serviceWebTlsEnabled
+  tls_allow_downgrade_to_plain_text_enabled = each.value.tlsAllowDowngradeToPlainTextEnabled
+  #Thresholds
+  event_connection_count_threshold = each.value.eventConnectionCountThreshold
+  event_egress_flow_count_threshold = each.value.eventEgressFlowCountThreshold
+  event_egress_msg_rate_threshold = each.value.eventEgressMsgRateThreshold
+  event_endpoint_count_threshold = each.value.eventEndpointCountThreshold
+  event_ingress_flow_count_threshold = each.value.eventIngressFlowCountThreshold
+  event_ingress_msg_rate_threshold = each.value.eventIngressMsgRateThreshold
+  event_msg_spool_usage_threshold = each.value.eventMsgSpoolUsageThreshold
+  event_service_amqp_connection_count_threshold = each.value.eventServiceAmqpConnectionCountThreshold
+  event_service_mqtt_connection_count_threshold = each.value.eventServiceMqttConnectionCountThreshold
+  event_service_rest_incoming_connection_count_threshold = each.value.eventServiceRestIncomingConnectionCountThreshold
+  event_service_smf_connection_count_threshold = each.value.eventServiceSmfConnectionCountThreshold
+  event_service_web_connection_count_threshold = each.value.eventServiceWebConnectionCountThreshold
+  event_subscription_count_threshold = each.value.eventSubscriptionCountThreshold
+  event_transacted_session_count_threshold = each.value.eventTransactedSessionCountThreshold
+  event_transaction_count_threshold = each.value.eventTransactionCountThreshold
+}
+
+# Import
+import {
+  for_each = {
+    for v in var.MsgVpns : "${v.msgVpnName}" => "${urlencode(v.msgVpnName)}" if v._import==true
+  }
+
+  to = solacebrokerappliance_msg_vpn.msgVpns[each.key]
+  id = each.value
+}
