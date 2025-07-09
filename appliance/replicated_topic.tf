@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_replicated_topic" "replicatedTopics" {
+resource "solacebroker_msg_vpn_replicated_topic" "replicatedTopics" {
   for_each = {
     for v in var.ReplicatedTopics : "${v.msgVpnName}.${v.replicatedTopic}" => v
   }
@@ -8,7 +8,7 @@ resource "solacebrokerappliance_msg_vpn_replicated_topic" "replicatedTopics" {
   replication_mode = each.value.replicationMode
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
@@ -18,6 +18,6 @@ import {
     for v in var.ReplicatedTopics : "${v.msgVpnName}.${v.replicatedTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.replicatedTopic)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_replicated_topic.replicatedTopics[each.key]
+  to = solacebroker_msg_vpn_replicated_topic.replicatedTopics[each.key]
   id = each.value
 }

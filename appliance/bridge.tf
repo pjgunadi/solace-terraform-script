@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_bridge" "bridges" {
+resource "solacebroker_msg_vpn_bridge" "bridges" {
   for_each = {
     for v in var.Bridges : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}" => v
   }
@@ -19,11 +19,11 @@ resource "solacebrokerappliance_msg_vpn_bridge" "bridges" {
     tls_cipher_suite_list = each.value.tlsCipherSuiteList
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns,
+    solacebroker_msg_vpn.msgVpns,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_bridge_remote_msg_vpn" "remoteMsgVpns" {
+resource "solacebroker_msg_vpn_bridge_remote_msg_vpn" "remoteMsgVpns" {
   for_each = {
     for v in var.RemoteMsgVpns : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteMsgVpnName}.${v.remoteMsgVpnLocation}.${v.remoteMsgVpnInterface}" => v
   }
@@ -45,11 +45,11 @@ resource "solacebrokerappliance_msg_vpn_bridge_remote_msg_vpn" "remoteMsgVpns" {
     unidirectional_client_profile = each.value.unidirectionalClientProfile
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_bridge.bridges
+    solacebroker_msg_vpn_bridge.bridges
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_bridge_remote_subscription" "remoteSubscriptions" {
+resource "solacebroker_msg_vpn_bridge_remote_subscription" "remoteSubscriptions" {
   for_each = {
     for v in var.RemoteSubscriptions : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteSubscriptionTopic}" => v
   }
@@ -61,7 +61,7 @@ resource "solacebrokerappliance_msg_vpn_bridge_remote_subscription" "remoteSubsc
     deliver_always_enabled = each.value.deliverAlwaysEnabled
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_bridge.bridges
+    solacebroker_msg_vpn_bridge.bridges
   ]
 }
 
@@ -71,7 +71,7 @@ import {
     for v in var.Bridges : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}" => "${urlencode(v.msgVpnName)}/${urlencode(v.bridgeName)}/${urlencode(v.bridgeVirtualRouter)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_bridge.bridges[each.key]
+  to = solacebroker_msg_vpn_bridge.bridges[each.key]
   id = each.value
 }
 
@@ -80,7 +80,7 @@ import {
     for v in var.RemoteMsgVpns : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteMsgVpnName}.${v.remoteMsgVpnLocation}.${v.remoteMsgVpnInterface}" => "${urlencode(v.msgVpnName)}/${urlencode(v.bridgeName)}/${urlencode(v.bridgeVirtualRouter)}/${urlencode(v.remoteMsgVpnName)}/${urlencode(v.remoteMsgVpnLocation)}/${urlencode(v.remoteMsgVpnInterface)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_bridge_remote_msg_vpn.remoteMsgVpns[each.key]
+  to = solacebroker_msg_vpn_bridge_remote_msg_vpn.remoteMsgVpns[each.key]
   id = each.value
 }
 
@@ -89,6 +89,6 @@ import {
     for v in var.RemoteSubscriptions : "${v.msgVpnName}.${v.bridgeName}.${v.bridgeVirtualRouter}.${v.remoteSubscriptionTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.bridgeName)}/${urlencode(v.bridgeVirtualRouter)}/${urlencode(v.remoteSubscriptionTopic)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_bridge_remote_subscription.remoteSubscriptions[each.key]
+  to = solacebroker_msg_vpn_bridge_remote_subscription.remoteSubscriptions[each.key]
   id = each.value
 }

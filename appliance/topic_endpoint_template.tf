@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_topic_endpoint_template" "topicEndpointTemplates" {
+resource "solacebroker_msg_vpn_topic_endpoint_template" "topicEndpointTemplates" {
     for_each = {
         for v in var.TopicEndpointTemplates : "${v.msgVpnName}.${v.topicEndpointTemplateName}" => v
     }
@@ -31,7 +31,7 @@ resource "solacebrokerappliance_msg_vpn_topic_endpoint_template" "topicEndpointT
     topic_endpoint_name_filter = each.value.topicEndpointNameFilter
     
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns
+        solacebroker_msg_vpn.msgVpns
     ]
 }
 
@@ -41,6 +41,6 @@ import {
         for v in var.TopicEndpointTemplates : "${v.msgVpnName}.${v.topicEndpointTemplateName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.topicEndpointTemplateName)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_topic_endpoint_template.topicEndpointTemplates[each.key]
+    to = solacebroker_msg_vpn_topic_endpoint_template.topicEndpointTemplates[each.key]
     id = each.value
 }

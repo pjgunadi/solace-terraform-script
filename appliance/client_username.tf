@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_client_username" "clientUsernames" {
+resource "solacebroker_msg_vpn_client_username" "clientUsernames" {
   for_each = {
     for v in var.ClientUsernames : "${v.msgVpnName}.${v.clientUsername}" => v
   }
@@ -13,14 +13,14 @@ resource "solacebrokerappliance_msg_vpn_client_username" "clientUsernames" {
   subscription_manager_enabled = each.value.subscriptionManagerEnabled
   
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns,
-    solacebrokerappliance_msg_vpn_acl_profile.aclProfiles,
-    solacebrokerappliance_msg_vpn_client_profile.clientProfiles,
-    solacebrokerappliance_msg_vpn_telemetry_profile.telemetryProfiles
+    solacebroker_msg_vpn.msgVpns,
+    solacebroker_msg_vpn_acl_profile.aclProfiles,
+    solacebroker_msg_vpn_client_profile.clientProfiles,
+    solacebroker_msg_vpn_telemetry_profile.telemetryProfiles
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_client_username_attribute" "clientUsernameAttributes" {
+resource "solacebroker_msg_vpn_client_username_attribute" "clientUsernameAttributes" {
   for_each = {
     for v in var.ClientUsernameAttributes : "${v.msgVpnName}.${v.clientUsername}.${v.attributeName}.${v.attributeValue}" => v
   }
@@ -31,7 +31,7 @@ resource "solacebrokerappliance_msg_vpn_client_username_attribute" "clientUserna
   attribute_value = each.value.attributeValue
   
   depends_on = [
-    solacebrokerappliance_msg_vpn_client_username.clientUsernames
+    solacebroker_msg_vpn_client_username.clientUsernames
   ]
 }
 
@@ -41,7 +41,7 @@ import {
     for v in var.ClientUsernames : "${v.msgVpnName}.${v.clientUsername}" => "${urlencode(v.msgVpnName)}/${urlencode(v.clientUsername)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_client_username.clientUsernames[each.key]
+  to = solacebroker_msg_vpn_client_username.clientUsernames[each.key]
   id = each.value
 }
 
@@ -50,6 +50,6 @@ import {
     for v in var.ClientUsernameAttributes : "${v.msgVpnName}.${v.clientUsername}.${v.attributeName}.${v.attributeValue}" => "${urlencode(v.msgVpnName)}/${urlencode(v.clientUsername)}/${urlencode(v.attributeName)}/${urlencode(v.attributeValue)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_client_username_attribute.clientUsernameAttributes[each.key]
+  to = solacebroker_msg_vpn_client_username_attribute.clientUsernameAttributes[each.key]
   id = each.value
 }

@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_telemetry_profile" "telemetryProfiles" {
+resource "solacebroker_msg_vpn_telemetry_profile" "telemetryProfiles" {
     for_each = {
         for v in var.TelemetryProfiles : "${v.msgVpnName}.${v.telemetryProfileName}" => v
     }
@@ -23,11 +23,11 @@ resource "solacebrokerappliance_msg_vpn_telemetry_profile" "telemetryProfiles" {
     trace_send_span_generation_enabled = each.value.traceSendSpanGenerationEnabled
 
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns
+        solacebroker_msg_vpn.msgVpns
     ]
 }
 
-resource "solacebrokerappliance_msg_vpn_telemetry_profile_receiver_acl_connect_exception" "telemetryProfileReceiverAclConnectExceptions" {
+resource "solacebroker_msg_vpn_telemetry_profile_receiver_acl_connect_exception" "telemetryProfileReceiverAclConnectExceptions" {
     for_each = {
         for v in var.TelemetryProfileReceiverAclConnectExceptions : "${v.msgVpnName}.${v.telemetryProfileName}.${v.receiverAclConnectExceptionAddress}" => v
     }
@@ -37,11 +37,11 @@ resource "solacebrokerappliance_msg_vpn_telemetry_profile_receiver_acl_connect_e
   receiver_acl_connect_exception_address = each.value.receiverAclConnectExceptionAddres
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_telemetry_profile.telemetryProfiles
+    solacebroker_msg_vpn_telemetry_profile.telemetryProfiles
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter" "telemetryProfileTraceFilters" {
+resource "solacebroker_msg_vpn_telemetry_profile_trace_filter" "telemetryProfileTraceFilters" {
     for_each = {
         for v in var.TelemetryProfileTraceFilters : "${v.msgVpnName}.${v.telemetryProfileName}.${v.traceFilterName}" => v
     }
@@ -52,11 +52,11 @@ resource "solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter" "telemet
   enabled = each.value.enabled
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_telemetry_profile.telemetryProfiles
+    solacebroker_msg_vpn_telemetry_profile.telemetryProfiles
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter_subscription" "telemetryProfileTraceFilterSubscriptions" {
+resource "solacebroker_msg_vpn_telemetry_profile_trace_filter_subscription" "telemetryProfileTraceFilterSubscriptions" {
     for_each = {
         for v in var.TelemetryProfileTraceFilterSubscriptions : "${v.msgVpnName}.${v.telemetryProfileName}.${v.traceFilterName}.${v.subscription}.${v.subscriptionSyntax}" => v
     }
@@ -68,7 +68,7 @@ resource "solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter_subscript
     subscription_syntax = each.value.subscriptionSyntax
 
     depends_on = [
-        solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter.telemetryProfileTraceFilters
+        solacebroker_msg_vpn_telemetry_profile_trace_filter.telemetryProfileTraceFilters
     ]
 }
 
@@ -78,7 +78,7 @@ import {
         for v in var.TelemetryProfiles : "${v.msgVpnName}.${v.telemetryProfileName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_telemetry_profile.telemetryProfiles[each.key]
+    to = solacebroker_msg_vpn_telemetry_profile.telemetryProfiles[each.key]
     id = each.value
 }
 
@@ -87,7 +87,7 @@ import {
         for v in var.TelemetryProfileReceiverAclConnectExceptions : "${v.msgVpnName}.${v.telemetryProfileName}.${v.receiverAclConnectExceptionAddress}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}/${urlencode(v.receiverAclConnectExceptionAddress)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_telemetry_profile_receiver_acl_connect_exception.telemetryProfileReceiverAclConnectExceptions[each.key]
+    to = solacebroker_msg_vpn_telemetry_profile_receiver_acl_connect_exception.telemetryProfileReceiverAclConnectExceptions[each.key]
     id = each.value
 }
 
@@ -96,7 +96,7 @@ import {
         for v in var.TelemetryProfileTraceFilters : "${v.msgVpnName}.${v.telemetryProfileName}.${v.traceFilterName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}/${urlencode(v.traceFilterName)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter.telemetryProfileTraceFilters[each.key]
+    to = solacebroker_msg_vpn_telemetry_profile_trace_filter.telemetryProfileTraceFilters[each.key]
     id = each.value
 }
 
@@ -105,6 +105,6 @@ import {
         for v in var.TelemetryProfileTraceFilterSubscriptions : "${v.msgVpnName}.${v.telemetryProfileName}.${v.traceFilterName}.${v.subscription}.${v.subscriptionSyntax}" => "${urlencode(v.msgVpnName)}/${urlencode(v.telemetryProfileName)}/${urlencode(v.traceFilterName)}/${urlencode(v.subscription)}/${urlencode(v.subscriptionSyntax)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_telemetry_profile_trace_filter_subscription.telemetryProfileTraceFilterSubscriptions[each.key]
+    to = solacebroker_msg_vpn_telemetry_profile_trace_filter_subscription.telemetryProfileTraceFilterSubscriptions[each.key]
     id = each.value
 }

@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn" "msgVpns" {
+resource "solacebroker_msg_vpn" "msgVpns" {
   for_each = {
     for v in var.MsgVpns : "${v.msgVpnName}" => v
   }
@@ -130,6 +130,6 @@ import {
     for v in var.MsgVpns : "${v.msgVpnName}" => "${urlencode(v.msgVpnName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn.msgVpns[each.key]
+  to = solacebroker_msg_vpn.msgVpns[each.key]
   id = each.value
 }

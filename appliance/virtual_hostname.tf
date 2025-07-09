@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_virtual_hostname" "virtualHostnames" {
+resource "solacebroker_virtual_hostname" "virtualHostnames" {
   for_each = {
     for v in var.VirtualHostnames : "${v.virtualHostname}" => v
   }
@@ -13,6 +13,6 @@ import {
     for v in var.VirtualHostnames : "${v.virtualHostname}" => "${urlencode(v.virtualHostname)}" if v._import==true
   }
 
-  to = solacebrokerappliance_virtual_hostname.virtualHostnames[each.key]
+  to = solacebroker_virtual_hostname.virtualHostnames[each.key]
   id = each.value
 }

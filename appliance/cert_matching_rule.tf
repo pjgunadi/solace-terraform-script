@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_cert_matching_rule" "certMatchingRules" {
+resource "solacebroker_msg_vpn_cert_matching_rule" "certMatchingRules" {
     for_each = {
         for v in var.CertMatchingRules : "${v.msgVpnName}.${v.ruleName}" => v
     }
@@ -8,11 +8,11 @@ resource "solacebrokerappliance_msg_vpn_cert_matching_rule" "certMatchingRules" 
     enabled = each.value.enabled
 
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns
+        solacebroker_msg_vpn.msgVpns
     ]
 }
 
-resource "solacebrokerappliance_msg_vpn_cert_matching_rule_attribute_filter" "certMatchingRuleAttributeFilters" {
+resource "solacebroker_msg_vpn_cert_matching_rule_attribute_filter" "certMatchingRuleAttributeFilters" {
     for_each = {
         for v in var.CertMatchingRuleAttributeFilters : "${v.msgVpnName}.${v.ruleName}.${v.filterName}" => v
     }
@@ -24,12 +24,12 @@ resource "solacebrokerappliance_msg_vpn_cert_matching_rule_attribute_filter" "ce
     attribute_value = each.value.attributeValue
 
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns,
-        solacebrokerappliance_msg_vpn_cert_matching_rule.certMatchingRules
+        solacebroker_msg_vpn.msgVpns,
+        solacebroker_msg_vpn_cert_matching_rule.certMatchingRules
     ]
 }
 
-resource "solacebrokerappliance_msg_vpn_cert_matching_rule_condition" "certMatchingRuleConditions" {
+resource "solacebroker_msg_vpn_cert_matching_rule_condition" "certMatchingRuleConditions" {
     for_each = {
         for v in var.CertMatchingRuleConditions : "${v.msgVpnName}.${v.ruleName}.${v.source}" => v
     }
@@ -41,8 +41,8 @@ resource "solacebrokerappliance_msg_vpn_cert_matching_rule_condition" "certMatch
     expression = each.value.expression
 
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns,
-        solacebrokerappliance_msg_vpn_cert_matching_rule.certMatchingRules
+        solacebroker_msg_vpn.msgVpns,
+        solacebroker_msg_vpn_cert_matching_rule.certMatchingRules
     ]
 }
 
@@ -52,7 +52,7 @@ import {
         for v in var.CertMatchingRules : "${v.msgVpnName}.${v.ruleName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.ruleName)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_cert_matching_rule.certMatchingRules[each.key]
+    to = solacebroker_msg_vpn_cert_matching_rule.certMatchingRules[each.key]
     id = each.value
 }
 
@@ -61,7 +61,7 @@ import {
         for v in var.CertMatchingRuleAttributeFilters : "${v.msgVpnName}.${v.ruleName}.${v.filterName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.ruleName)}/${urlencode(v.filterName)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_cert_matching_rule_attribute_filter.certMatchingRuleAttributeFilters[each.key]
+    to = solacebroker_msg_vpn_cert_matching_rule_attribute_filter.certMatchingRuleAttributeFilters[each.key]
     id = each.value
 }
 
@@ -70,6 +70,6 @@ import {
         for v in var.CertMatchingRuleConditions : "${v.msgVpnName}.${v.ruleName}.${v.source}" => "${urlencode(v.msgVpnName)}/${urlencode(v.ruleName)}/${urlencode(v.source)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_cert_matching_rule_condition.certMatchingRuleConditions[each.key]
+    to = solacebroker_msg_vpn_cert_matching_rule_condition.certMatchingRuleConditions[each.key]
     id = each.value
 }

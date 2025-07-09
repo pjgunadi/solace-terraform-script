@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_broker" "broker" {
+resource "solacebroker_broker" "broker" {
     for_each = var.Broker
     auth_brute_force_protection_enabled = each.value.authBruteForceProtectionEnabled
     auth_client_cert_revocation_check_mode = each.value.authClientCertRevocationCheckMode
@@ -46,12 +46,12 @@ resource "solacebrokerappliance_broker" "broker" {
     service_health_check_listen_port = each.value.serviceHealthCheckListenPort
     service_health_check_tls_enabled = each.value.serviceHealthCheckTlsEnabled
     service_health_check_tls_listen_port = each.value.serviceHealthCheckTlsListenPort
-    service_mate_link_enabled = each.value.serviceMateLinkEnabled
-    service_mate_link_listen_port = each.value.serviceMateLinkListenPort
+    # service_mate_link_enabled = each.value.serviceMateLinkEnabled
+    # service_mate_link_listen_port = each.value.serviceMateLinkListenPort
     service_mqtt_enabled = each.value.serviceMqttEnabled
     service_msg_backbone_enabled = each.value.serviceMsgBackboneEnabled
-    service_redundancy_enabled = each.value.serviceRedundancyEnabled
-    service_redundancy_first_listen_port = each.value.serviceRedundancyFirstListenPort
+    # service_redundancy_enabled = each.value.serviceRedundancyEnabled
+    # service_redundancy_first_listen_port = each.value.serviceRedundancyFirstListenPort
     service_rest_event_outgoing_connection_count_threshold = each.value.serviceRestEventOutgoingConnectionCountThreshold
     service_rest_incoming_enabled = each.value.serviceRestIncomingEnabled
     service_rest_outgoing_enabled = each.value.serviceRestOutgoingEnabled

@@ -1,5 +1,5 @@
 
-resource "solacebrokerappliance_msg_vpn_distributed_cache" "distributedCaches" {
+resource "solacebroker_msg_vpn_distributed_cache" "distributedCaches" {
   for_each = {
     for v in var.DistributedCaches : "${v.msgVpnName}.${v.cacheName}" => v
   }
@@ -12,11 +12,11 @@ resource "solacebrokerappliance_msg_vpn_distributed_cache" "distributedCaches" {
   scheduled_delete_msg_time_list = each.value.scheduledDeleteMsgTimeList
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns,
+    solacebroker_msg_vpn.msgVpns,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster" "distributedCacheClusters" {
+resource "solacebroker_msg_vpn_distributed_cache_cluster" "distributedCacheClusters" {
   for_each = {
     for v in var.DistributedCacheClusters : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}" => v
   }
@@ -44,11 +44,11 @@ resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster" "distributedC
   event_response_rate_threshold = each.value.eventResponseRateThreshold
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_distributed_cache.distributedCaches,
+    solacebroker_msg_vpn_distributed_cache.distributedCaches,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching_home_cluster" "globalCachingHomeClusters" {
+resource "solacebroker_msg_vpn_distributed_cache_cluster_global_caching_home_cluster" "globalCachingHomeClusters" {
   for_each = {
     for v in var.GlobalCachingHomeClusters : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.homeClusterName}" => v
   }
@@ -59,11 +59,11 @@ resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching
   home_cluster_name = each.value.homeClusterName
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_distributed_cache_cluster.distributedCacheClusters,
+    solacebroker_msg_vpn_distributed_cache_cluster.distributedCacheClusters,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching_home_cluster_topic_prefix" "globalCachingHomeClusterTopicPrefixes" {
+resource "solacebroker_msg_vpn_distributed_cache_cluster_global_caching_home_cluster_topic_prefix" "globalCachingHomeClusterTopicPrefixes" {
   for_each = {
     for v in var.GlobalCachingHomeClusterTopicPrefixes : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.homeClusterName}.${v.topicPrefix}" => v
   }
@@ -74,11 +74,11 @@ resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching
   topic_prefix = each.value.topicPrefix
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching_home_cluster.globalCachingHomeClusters,
+    solacebroker_msg_vpn_distributed_cache_cluster_global_caching_home_cluster.globalCachingHomeClusters,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_instance" "distributedCacheClusterInstances" {
+resource "solacebroker_msg_vpn_distributed_cache_cluster_instance" "distributedCacheClusterInstances" {
   for_each = {
     for v in var.DistributedCacheClusterInstances : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.instanceName}" => v
   }
@@ -92,11 +92,11 @@ resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_instance" "dis
   stop_on_lost_msg_enabled = each.value.stopOnLostMsgEnabled
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_distributed_cache_cluster.distributedCacheClusters,
+    solacebroker_msg_vpn_distributed_cache_cluster.distributedCacheClusters,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_topic" "distributedCacheClusterTopics" {
+resource "solacebroker_msg_vpn_distributed_cache_cluster_topic" "distributedCacheClusterTopics" {
   for_each = {
     for v in var.DistributedCacheClusterTopics : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.topic}" => v
   }
@@ -107,7 +107,7 @@ resource "solacebrokerappliance_msg_vpn_distributed_cache_cluster_topic" "distri
   topic = each.value.topic
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_distributed_cache_cluster.distributedCacheClusters,
+    solacebroker_msg_vpn_distributed_cache_cluster.distributedCacheClusters,
   ]
 }
 
@@ -117,7 +117,7 @@ import {
     for v in var.DistributedCaches : "${v.msgVpnName}.${v.cacheName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_distributed_cache.distributedCaches[each.key]
+  to = solacebroker_msg_vpn_distributed_cache.distributedCaches[each.key]
   id = each.value
 }
 
@@ -126,7 +126,7 @@ import {
     for v in var.DistributedCacheClusters : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}/${urlencode(v.clusterName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_distributed_cache_cluster.distributedCacheClusters[each.key]
+  to = solacebroker_msg_vpn_distributed_cache_cluster.distributedCacheClusters[each.key]
   id = each.value
 }
 
@@ -135,7 +135,7 @@ import {
     for v in var.GlobalCachingHomeClusters : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.homeClusterName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}/${urlencode(v.clusterName)}/${urlencode(v.homeClusterName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching_home_cluster.globalCachingHomeClusters[each.key]
+  to = solacebroker_msg_vpn_distributed_cache_cluster_global_caching_home_cluster.globalCachingHomeClusters[each.key]
   id = each.value
 }
 
@@ -144,7 +144,7 @@ import {
     for v in var.GlobalCachingHomeClusterTopicPrefixes : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.homeClusterName}.${v.topicPrefix}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}/${urlencode(v.clusterName)}/${urlencode(v.homeClusterName)}/${urlencode(v.topicPrefix)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_distributed_cache_cluster_global_caching_home_cluster_topic_prefix.globalCachingHomeClusterTopicPrefixes[each.key]
+  to = solacebroker_msg_vpn_distributed_cache_cluster_global_caching_home_cluster_topic_prefix.globalCachingHomeClusterTopicPrefixes[each.key]
   id = each.value
 }
 
@@ -153,7 +153,7 @@ import {
     for v in var.DistributedCacheClusterInstances : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.instanceName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}/${urlencode(v.clusterName)}/${urlencode(v.instanceName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_distributed_cache_cluster_instance.distributedCacheClusterInstances[each.key]
+  to = solacebroker_msg_vpn_distributed_cache_cluster_instance.distributedCacheClusterInstances[each.key]
   id = each.value
 }
 
@@ -162,6 +162,6 @@ import {
     for v in var.DistributedCacheClusterTopics : "${v.msgVpnName}.${v.cacheName}.${v.clusterName}.${v.topic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}/${urlencode(v.clusterName)}/${urlencode(v.topic)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_distributed_cache_cluster_topic.distributedCacheClusterTopics[each.key]
+  to = solacebroker_msg_vpn_distributed_cache_cluster_topic.distributedCacheClusterTopics[each.key]
   id = each.value
 }

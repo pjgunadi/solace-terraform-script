@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_queue_template" "queueTemplates" {
+resource "solacebroker_msg_vpn_queue_template" "queueTemplates" {
     for_each = {
         for v in var.QueueTemplates : "${v.msgVpnName}.${v.queueTemplateName}" => v
     }
@@ -33,7 +33,7 @@ resource "solacebrokerappliance_msg_vpn_queue_template" "queueTemplates" {
     respect_ttl_enabled = each.value.respectTtlEnabled
 
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns
+        solacebroker_msg_vpn.msgVpns
     ]
 }
 
@@ -43,6 +43,6 @@ import {
         for v in var.QueueTemplates : "${v.msgVpnName}.${v.queueTemplateName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueTemplateName)}" if v._import==true
     }
 
-    to = solacebrokerappliance_msg_vpn_queue_template.queueTemplates[each.key]
+    to = solacebroker_msg_vpn_queue_template.queueTemplates[each.key]
     id = each.value
 }

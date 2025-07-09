@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_mqtt_retain_cache" "mqttRetainCaches" {
+resource "solacebroker_msg_vpn_mqtt_retain_cache" "mqttRetainCaches" {
   for_each = {
     for v in var.MqttRetainCaches : "${v.msgVpnName}.${v.cacheName}" => v
   }
@@ -9,7 +9,7 @@ resource "solacebrokerappliance_msg_vpn_mqtt_retain_cache" "mqttRetainCaches" {
   msg_lifetime = each.value.msgLifetime
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
@@ -19,6 +19,6 @@ import {
     for v in var.MqttRetainCaches : "${v.msgVpnName}.${v.cacheName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.cacheName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_mqtt_retain_cache.mqttRetainCaches[each.key]
+  to = solacebroker_msg_vpn_mqtt_retain_cache.mqttRetainCaches[each.key]
   id = each.value
 }

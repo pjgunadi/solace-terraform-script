@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_client_profile" "clientProfiles" {
+resource "solacebroker_msg_vpn_client_profile" "clientProfiles" {
     for_each = {
       for v in var.ClientProfiles : "${v.msgVpnName}.${v.clientProfileName}" => v
     }
@@ -64,7 +64,7 @@ resource "solacebrokerappliance_msg_vpn_client_profile" "clientProfiles" {
     event_transaction_count_threshold = each.value.eventTransactionCountThreshold
 
     depends_on = [
-      solacebrokerappliance_msg_vpn.msgVpns
+      solacebroker_msg_vpn.msgVpns
     ]
 }
 
@@ -74,6 +74,6 @@ import {
     for v in var.ClientProfiles : "${v.msgVpnName}.${v.clientProfileName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.clientProfileName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_client_profile.clientProfiles[each.key]
+  to = solacebroker_msg_vpn_client_profile.clientProfiles[each.key]
   id = each.value
 }

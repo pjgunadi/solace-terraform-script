@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_proxy" "msg_vpn_proxies" {
+resource "solacebroker_msg_vpn_proxy" "msg_vpn_proxies" {
   for_each = {
     for v in var.MsgVpnProxies : "${v.msgVpnName}.${v.proxyName}" => v
   }
@@ -14,11 +14,11 @@ resource "solacebrokerappliance_msg_vpn_proxy" "msg_vpn_proxies" {
   proxy_type = each.value.proxyType
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
-resource "solacebrokerappliance_proxy" "broker_proxies" {
+resource "solacebroker_proxy" "broker_proxies" {
   for_each = {
     for v in var.BrokerProxies : "${v.proxyName}" => v
   }
@@ -40,7 +40,7 @@ import {
     for v in var.MsgVpnProxies : "${v.msgVpnName}.${v.proxyName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.proxyName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_proxy.msg_vpn_proxies[each.key]
+  to = solacebroker_msg_vpn_proxy.msg_vpn_proxies[each.key]
   id = each.value
 }
 
@@ -49,6 +49,6 @@ import {
     for v in var.BrokerProxies : "${v.proxyName}" => "${urlencode(v.proxyName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_proxy.broker_proxies[each.key]
+  to = solacebroker_proxy.broker_proxies[each.key]
   id = each.value
 }

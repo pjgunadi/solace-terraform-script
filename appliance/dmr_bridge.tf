@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_dmr_bridge" "dmrBridges" {
+resource "solacebroker_msg_vpn_dmr_bridge" "dmrBridges" {
   for_each = {
     for v in var.DmrBridges : "${v.msgVpnName}.${v.remoteNodeName}" => v
   }
@@ -8,7 +8,7 @@ resource "solacebrokerappliance_msg_vpn_dmr_bridge" "dmrBridges" {
   remote_msg_vpn_name = each.value.remoteMsgVpnName
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns,
+    solacebroker_msg_vpn.msgVpns,
   ]
 }
 
@@ -18,6 +18,6 @@ import {
     for v in var.DmrBridges : "${v.msgVpnName}.${v.remoteNodeName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.remoteNodeName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_dmr_bridge.dmrBridges[each.key]
+  to = solacebroker_msg_vpn_dmr_bridge.dmrBridges[each.key]
   id = each.value
 }

@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_topic_endpoint" "topicEndpoints" {
+resource "solacebroker_msg_vpn_topic_endpoint" "topicEndpoints" {
     for_each = {
         for v in var.TopicEndpoints : "${v.msgVpnName}.${v.topicEndpointName}" => v
     }
@@ -35,7 +35,7 @@ resource "solacebrokerappliance_msg_vpn_topic_endpoint" "topicEndpoints" {
     respect_ttl_enabled = each.value.respectTtlEnabled
 
     depends_on = [
-        solacebrokerappliance_msg_vpn.msgVpns
+        solacebroker_msg_vpn.msgVpns
     ]
 }
 
@@ -45,6 +45,6 @@ import {
     for v in var.TopicEndpoints : "${v.msgVpnName}.${v.topicEndpointName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.topicEndpointName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_topic_endpoint.topicEndpoints[each.key]
+  to = solacebroker_msg_vpn_topic_endpoint.topicEndpoints[each.key]
   id = each.value
 }

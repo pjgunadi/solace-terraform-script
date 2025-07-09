@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_queue" "queues" {
+resource "solacebroker_msg_vpn_queue" "queues" {
   for_each = {
     for v in var.Queues : "${v.msgVpnName}.${v.queueName}" => v
   }
@@ -38,11 +38,11 @@ resource "solacebrokerappliance_msg_vpn_queue" "queues" {
     event_reject_low_priority_msg_limit_threshold = each.value.eventRejectLowPriorityMsgLimitThreshold
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_queue_subscription" "subscriptions" {
+resource "solacebroker_msg_vpn_queue_subscription" "subscriptions" {
   for_each = {
     for v in var.Subscriptions : "${v.msgVpnName}.${v.queueName}.${v.subscriptionTopic}" => v
   }
@@ -51,7 +51,7 @@ resource "solacebrokerappliance_msg_vpn_queue_subscription" "subscriptions" {
   msg_vpn_name = each.value.msgVpnName
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_queue.queues
+    solacebroker_msg_vpn_queue.queues
   ]
 }
 
@@ -61,7 +61,7 @@ import {
     for v in var.Queues : "${v.msgVpnName}.${v.queueName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_queue.queues[each.key]
+  to = solacebroker_msg_vpn_queue.queues[each.key]
   id = each.value
 }
 
@@ -70,6 +70,6 @@ import {
     for v in var.Subscriptions : "${v.msgVpnName}.${v.queueName}.${v.subscriptionTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueName)}/${urlencode(v.subscriptionTopic)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_queue_subscription.subscriptions[each.key]
+  to = solacebroker_msg_vpn_queue_subscription.subscriptions[each.key]
   id = each.value
 }

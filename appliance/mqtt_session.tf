@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_mqtt_session" "mqttSessions" {
+resource "solacebroker_msg_vpn_mqtt_session" "mqttSessions" {
   for_each = {
       for v in var.MqttSessions : "${v.msgVpnName}.${v.mqttSessionClientId}.${v.mqttSessionVirtualRouter}" => v
   }
@@ -23,11 +23,11 @@ resource "solacebrokerappliance_msg_vpn_mqtt_session" "mqttSessions" {
   queue_reject_msg_to_sender_on_discard_behavior = each.value.queueRejectMsgToSenderOnDiscardBehavior
   queue_respect_ttl_enabled = each.value.queueRespectTtlEnabled
   depends_on = [
-      solacebrokerappliance_msg_vpn.msgVpns,
+      solacebroker_msg_vpn.msgVpns,
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_mqtt_session_subscription" "mqttSessionSubscriptions" {
+resource "solacebroker_msg_vpn_mqtt_session_subscription" "mqttSessionSubscriptions" {
   for_each = {
     for v in var.MqttSessionSubscriptions : "${v.msgVpnName}.${v.mqttSessionClientId}.${v.mqttSessionVirtualRouter}.${v.subscriptionTopic}" => v
   }
@@ -38,7 +38,7 @@ resource "solacebrokerappliance_msg_vpn_mqtt_session_subscription" "mqttSessionS
   subscription_qos = each.value.subscriptionQos
   
   depends_on = [
-    solacebrokerappliance_msg_vpn_mqtt_session.mqttSessions,
+    solacebroker_msg_vpn_mqtt_session.mqttSessions,
   ]
 }
 
@@ -48,7 +48,7 @@ import {
       for v in var.MqttSessions : "${v.msgVpnName}.${v.mqttSessionClientId}.${v.mqttSessionVirtualRouter}" => "${urlencode(v.msgVpnName)}/${urlencode(v.mqttSessionClientId)}/${urlencode(v.mqttSessionVirtualRouter)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_mqtt_session.mqttSessions[each.key]
+  to = solacebroker_msg_vpn_mqtt_session.mqttSessions[each.key]
   id = each.value
 }
 
@@ -57,6 +57,6 @@ import {
     for v in var.MqttSessionSubscriptions : "${v.msgVpnName}.${v.mqttSessionClientId}.${v.mqttSessionVirtualRouter}.${v.subscriptionTopic}" => "${urlencode(v.msgVpnName)}/${urlencode(v.mqttSessionClientId)}/${urlencode(v.mqttSessionVirtualRouter)}/${urlencode(v.subscriptionTopic)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_mqtt_session_subscription.mqttSessionSubscriptions[each.key]
+  to = solacebroker_msg_vpn_mqtt_session_subscription.mqttSessionSubscriptions[each.key]
   id = each.value
 }

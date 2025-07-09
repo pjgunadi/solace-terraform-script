@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_domain_cert_authority" "domainCertAuthorities" {
+resource "solacebroker_domain_cert_authority" "domainCertAuthorities" {
   for_each = {
     for v in var.DomainCertAuthorities : "${v.certAuthorityName}" => v
   }
@@ -13,6 +13,6 @@ import {
     for v in var.DomainCertAuthorities : "${v.certAuthorityName}" => "${urlencode(v.certAuthorityName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_domain_cert_authority.domainCertAuthorities[each.key]
+  to = solacebroker_domain_cert_authority.domainCertAuthorities[each.key]
   id = each.value
 }

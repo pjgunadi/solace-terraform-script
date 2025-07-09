@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_jndi_connection_factory" "jndiConnectionFactories" {
+resource "solacebroker_msg_vpn_jndi_connection_factory" "jndiConnectionFactories" {
   for_each = {
     for v in var.JndiConnectionFactories : "${v.msgVpnName}.${v.connectionFactoryName}" => v
   }
@@ -45,11 +45,11 @@ resource "solacebrokerappliance_msg_vpn_jndi_connection_factory" "jndiConnection
   xa_enabled = each.value.xaEnabled
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_jndi_queue" "jndiQueues" {
+resource "solacebroker_msg_vpn_jndi_queue" "jndiQueues" {
   for_each = {
     for v in var.JndiQueues : "${v.msgVpnName}.${v.queueName}" => v
   }
@@ -59,11 +59,11 @@ resource "solacebrokerappliance_msg_vpn_jndi_queue" "jndiQueues" {
   physical_name = each.value.physicalName
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_jndi_topic" "jndiTopics" {
+resource "solacebroker_msg_vpn_jndi_topic" "jndiTopics" {
   for_each = {
     for v in var.JndiTopics : "${v.msgVpnName}.${v.topicName}" => v
   }
@@ -73,7 +73,7 @@ resource "solacebrokerappliance_msg_vpn_jndi_topic" "jndiTopics" {
   physical_name = each.value.physicalName
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
@@ -83,7 +83,7 @@ import {
     for v in var.JndiConnectionFactories : "${v.msgVpnName}.${v.connectionFactoryName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.connectionFactoryName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_jndi_connection_factory.jndiConnectionFactories[each.key]
+  to = solacebroker_msg_vpn_jndi_connection_factory.jndiConnectionFactories[each.key]
   id = each.value
 }
 
@@ -92,7 +92,7 @@ import {
     for v in var.JndiQueues : "${v.msgVpnName}.${v.queueName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.queueName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_jndi_queue.jndiQueues[each.key]
+  to = solacebroker_msg_vpn_jndi_queue.jndiQueues[each.key]
   id = each.value
 }
 
@@ -101,7 +101,7 @@ import {
     for v in var.JndiTopics : "${v.msgVpnName}.${v.topicName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.topicName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_jndi_topic.jndiTopics[each.key]
+  to = solacebroker_msg_vpn_jndi_topic.jndiTopics[each.key]
   id = each.value
 }
   

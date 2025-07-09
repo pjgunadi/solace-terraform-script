@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_client_cert_authority" "clientCertAuthorities" {
+resource "solacebroker_client_cert_authority" "clientCertAuthorities" {
   for_each = {
     for v in var.ClientCertAuthorities : "${v.certAuthorityName}" => v
   }
@@ -13,14 +13,14 @@ resource "solacebrokerappliance_client_cert_authority" "clientCertAuthorities" {
     revocation_check_enabled = each.value.revocationCheckEnabled
 }
 
-resource "solacebrokerappliance_client_cert_authority_ocsp_tls_trusted_common_name" "ocspTlsTrustedCommonNames" {
+resource "solacebroker_client_cert_authority_ocsp_tls_trusted_common_name" "ocspTlsTrustedCommonNames" {
   for_each = {
     for v in var.OcspTlsTrustedCommonNames : "${v.certAuthorityName}.${v.ocspTlsTrustedCommonNames}" => v
   }
   cert_authority_name = each.value.certAuthorityName
   ocsp_tls_trusted_common_name = each.value.ocspTlsTrustedCommonName
   depends_on = [
-    solacebrokerappliance_client_cert_authority.clientCertAuthorities
+    solacebroker_client_cert_authority.clientCertAuthorities
   ]
 }
 
@@ -30,7 +30,7 @@ import {
     for v in var.ClientCertAuthorities : "${v.certAuthorityName}" => "${urlencode(v.certAuthorityName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_client_cert_authority.clientCertAuthorities[each.key]
+  to = solacebroker_client_cert_authority.clientCertAuthorities[each.key]
   id = each.value
 }
 
@@ -39,7 +39,7 @@ import {
     for v in var.OcspTlsTrustedCommonNames : "${v.certAuthorityName}.${v.ocspTlsTrustedCommonNames}" => "${urlencode(v.certAuthorityName)}/${urlencode(v.ocspTlsTrustedCommonNames)}" if v._import==true
   }
 
-  to = solacebrokerappliance_client_cert_authority_ocsp_tls_trusted_common_name.ocspTlsTrustedCommonNames[each.key]
+  to = solacebroker_client_cert_authority_ocsp_tls_trusted_common_name.ocspTlsTrustedCommonNames[each.key]
   id = each.value
 }
   

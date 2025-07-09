@@ -1,4 +1,4 @@
-resource "solacebrokerappliance_msg_vpn_replay_log" "replayLogs" {
+resource "solacebroker_msg_vpn_replay_log" "replayLogs" {
   for_each = {
     for v in var.ReplayLogs : "${v.msgVpnName}.${v.replayLogName}" => v
   }
@@ -11,11 +11,11 @@ resource "solacebrokerappliance_msg_vpn_replay_log" "replayLogs" {
   topic_filter_enabled = each.value.topicFilterEnabled
 
   depends_on = [
-    solacebrokerappliance_msg_vpn.msgVpns
+    solacebroker_msg_vpn.msgVpns
   ]
 }
 
-resource "solacebrokerappliance_msg_vpn_replay_log_topic_filter_subscription" "replayLogTopicFilterSubscriptions" {
+resource "solacebroker_msg_vpn_replay_log_topic_filter_subscription" "replayLogTopicFilterSubscriptions" {
   for_each = {
     for v in var.ReplayLogTopicFilterSubscriptions : "${v.msgVpnName}.${v.replayLogName}.${v.topicFilterSubscription}" => v
   }
@@ -25,7 +25,7 @@ resource "solacebrokerappliance_msg_vpn_replay_log_topic_filter_subscription" "r
   topic_filter_subscription = each.value.topicFilterSubscription
 
   depends_on = [
-    solacebrokerappliance_msg_vpn_replay_log.replayLogs
+    solacebroker_msg_vpn_replay_log.replayLogs
   ]
 }
 
@@ -35,7 +35,7 @@ import {
     for v in var.ReplayLogs : "${v.msgVpnName}.${v.replayLogName}" => "${urlencode(v.msgVpnName)}/${urlencode(v.replayLogName)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_replay_log.replayLogs[each.key]
+  to = solacebroker_msg_vpn_replay_log.replayLogs[each.key]
   id = each.value
 }
 
@@ -44,6 +44,6 @@ import {
     for v in var.ReplayLogTopicFilterSubscriptions : "${v.msgVpnName}.${v.replayLogName}.${v.topicFilterSubscription}" => "${urlencode(v.msgVpnName)}/${urlencode(v.replayLogName)}/${urlencode(v.topicFilterSubscription)}" if v._import==true
   }
 
-  to = solacebrokerappliance_msg_vpn_replay_log_topic_filter_subscription.replayLogTopicFilterSubscriptions[each.key]
+  to = solacebroker_msg_vpn_replay_log_topic_filter_subscription.replayLogTopicFilterSubscriptions[each.key]
   id = each.value
 }
