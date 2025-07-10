@@ -34,7 +34,7 @@ resource "solacebroker_msg_vpn_telemetry_profile_receiver_acl_connect_exception"
   
   msg_vpn_name = each.value.msgVpnName
   telemetry_profile_name = each.value.telemetryProfileName
-  receiver_acl_connect_exception_address = each.value.receiverAclConnectExceptionAddres
+  receiver_acl_connect_exception_address = each.value.receiverAclConnectExceptionAddress
 
   depends_on = [
     solacebroker_msg_vpn_telemetry_profile.telemetryProfiles
