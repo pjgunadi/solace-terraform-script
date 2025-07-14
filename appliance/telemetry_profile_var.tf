@@ -28,7 +28,7 @@ variable "TelemetryProfileReceiverAclConnectExceptions" {
     type = list(object({
         msgVpnName = string
         telemetryProfileName = string
-        receiverAclConnectExceptionAddres = string
+        receiverAclConnectExceptionAddress = string
         #Import Flag 
         _import = optional(bool)
     }))
