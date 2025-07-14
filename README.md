@@ -2,12 +2,14 @@
 
 ## Quickstart
 1. Create configuration file e.g. `your_solace_config.tfvars`. See the sample file [terraform.tfvars_sample](./terraform.tfvars_sample)
-2. Run terraform from command line:
+2. Create a new workspace or select existing workspace (if required):
+`terraform workspace new {your_workspace_name}` or `terraform wokspace select {your_workspace_name}`
+3. Run terraform from command line:
    - Initialize: `terraform init`
-   - Plan: `terraform plan -var-file=yours_solace_config.tfvars`
-   - Apply / Update resource: `terraform apply -var-file=yours_solace_config.tfvars [--auto-approve]`
-   - Delete resource: `terraform destroy -var-file=yours_solace_config.tfvars [--auto-approve]`
-3. This template can be used as a module
+   - Plan: `terraform -chdir=[appliance|software] plan  -var-file=../relative/path/from/appliance/or/software/to/yours_solace_config.tfvars`
+   - Apply / Update resource: `terraform -chdir=[appliance|software] apply -var-file=../relative/path/from/appliance/or/software/to/yours_solace_config.tfvars [-auto-approve]`
+   - Delete resource: `terraform -chdir=[appliance|software] destroy -var-file=../relative/path/from/appliance/or/software/to/yours_solace_config.tfvars [-auto-approve]`
+4. This template can be used as a module
 
 ## Description
 This repository provides a collection of terraform scripts for configuring Solace broker.
